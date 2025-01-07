@@ -1,4 +1,4 @@
-package main.java.sejour;
+package main.java.sejour.elements;
 
 public class Coordonnes {
     private double latitude;

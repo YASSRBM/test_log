@@ -1,5 +1,9 @@
 package main.java.sejour;
 
+import main.java.sejour.elements.Activite;
+import main.java.sejour.elements.Forfait;
+import main.java.sejour.elements.Hotel;
+
 import java.nio.file.Path;
 import java.util.List;
 

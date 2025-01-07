@@ -1,5 +1,7 @@
 package main.java.sejour;
 
+import main.java.sejour.elements.Coordonnes;
+
 public class GeoUtils {
     public static Coordonnes GPS2Coordonnes(String adresse){
 

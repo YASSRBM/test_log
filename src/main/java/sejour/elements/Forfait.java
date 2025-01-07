@@ -1,4 +1,4 @@
-package main.java.sejour;
+package main.java.sejour.elements;
 
 import java.util.List;
 
