@@ -1,4 +1,4 @@
-package main.java.sejour;
+package sejour;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,7 +14,10 @@ import java.util.logging.Handler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import main.java.sejour.Trajet;
+import sejour.elements.*;
+
+
+
 
 public class DataHandler {
     public DataHandler(Path folderPath){
@@ -34,7 +37,7 @@ public class DataHandler {
         return activites;
     }
 
-    public List<Traje> getTransports() {
+    public List<Trajet> getTransports() {
         return transports;
     }
 

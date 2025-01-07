@@ -1,4 +1,4 @@
-package main.java.sejour;
+package sejour.elements;
 
 import java.time.Instant;
 
