@@ -2,7 +2,11 @@ package sejour.elements;
 
 import java.util.Date;
 
+
+
 public class Activite {
+    public enum Categorie {SPORT, MUSIQUE}
+
     public String getAdresse() {
         return adresse;
     }
@@ -19,11 +23,11 @@ public class Activite {
         this.date = date;
     }
 
-    public String getCategorie() {
+    public Categorie getCategorie() {
         return categorie;
     }
 
-    public void setCategorie(String categorie) {
+    public void setCategorie(Categorie categorie) {
         this.categorie = categorie;
     }
 
@@ -37,6 +41,6 @@ public class Activite {
 
     private String adresse;
     private Date date;
-    private String categorie;
+    private Categorie categorie;
     private double prix;
 }

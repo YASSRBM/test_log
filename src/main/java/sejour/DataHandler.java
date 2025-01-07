@@ -37,8 +37,8 @@ public class DataHandler {
         return activites;
     }
 
-    public List<Trajet> getTransports() {
-        return transports;
+    public List<Trajet> getTrajets() {
+        return Trajets;
     }
 
     public List<Forfait> getForfaits() {
@@ -47,7 +47,7 @@ public class DataHandler {
 
     private List<Hotel> hotels = new ArrayList<>();
     private List<Forfait> forfaits;
-    private List<Trajet> transports;
+    private List<Trajet> Trajets;
     private List<Activite> activites;
 
     public void initHotels() {
@@ -113,7 +113,7 @@ public class DataHandler {
     }
     
 
-    public void initTransports() {
+    public void initTrajets() {
         try {
             String trajetsJson = new String(Files.readAllBytes(Paths.get("data/trajet.json")));
             JSONArray trajetsArray = new JSONArray(trajetsJson);
@@ -127,10 +127,10 @@ public class DataHandler {
                 trajet.setTempsArrivee(Instant.parse(trajetJson.getString("tempsArrivee")));
                 trajet.setModeTransport(trajetJson.getString("modeTransport"));
                 trajet.setPrix(trajetJson.getDouble("prix"));
-                transports.add(trajet);
+                Trajets.add(trajet);
             }
 
-            for (Trajet trajet : transports) {
+            for (Trajet trajet : Trajets) {
                 System.out.println("Trajet: " + trajet.getVilleDepart() + " -> " + trajet.getVilleArrivee() + ", Mode: " + trajet.getModeTransport() + ", Prix: " + trajet.getPrix());
             }
         } catch (IOException e) {

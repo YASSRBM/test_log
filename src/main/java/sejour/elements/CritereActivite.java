@@ -1,9 +1,9 @@
 package sejour.elements;
 
-public class CritereActivite {
-    private enum Categorie {SPORT, MUSIQUE}
 
-    public Categorie getCategorie() {
+public class CritereActivite {
+
+    public Activite.Categorie getCategorie() {
         return categorie;
     }
 
@@ -11,10 +11,10 @@ public class CritereActivite {
         return distanceMax;
     }
 
-    private Categorie categorie;
+    private Activite.Categorie categorie;
     private double distanceMax;
 
-    public CritereActivite(Categorie categorie, double distanceMax) {
+    public CritereActivite(Activite.Categorie categorie, double distanceMax) {
         this.categorie = categorie;
         this.distanceMax = distanceMax;
     }
