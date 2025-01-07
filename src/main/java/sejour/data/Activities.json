@@ -1,0 +1,170 @@
+[
+    {
+        "adresse": "Louvre Museum, Rue de Rivoli",
+        "date": "2025-03-15",
+        "categorie": "Visite culturelle",
+        "prix": 25.0,
+        "ville": "Paris"
+    },
+    {
+        "adresse": "Eiffel Tower, Champ de Mars",
+        "date": "2025-03-16",
+        "categorie": "Attraction touristique",
+        "prix": 20.0,
+        "ville": "Paris"
+    },
+    {
+        "adresse": "Seine River, Quai de la Tournelle",
+        "date": "2025-03-17",
+        "categorie": "Croisière",
+        "prix": 30.0,
+        "ville": "Paris"
+    },
+    {
+        "adresse": "Montmartre, Place du Tertre",
+        "date": "2025-03-18",
+        "categorie": "Balade",
+        "prix": 10.0,
+        "ville": "Paris"
+    },
+    {
+        "adresse": "Champs-Élysées",
+        "date": "2025-03-19",
+        "categorie": "Shopping",
+        "prix": 0.0,
+        "ville": "Paris"
+    },
+    {
+        "adresse": "Versailles Palace",
+        "date": "2025-03-20",
+        "categorie": "Visite historique",
+        "prix": 40.0,
+        "ville": "Paris"
+    },
+    {
+        "adresse": "British Museum, Great Russell Street",
+        "date": "2025-04-01",
+        "categorie": "Visite culturelle",
+        "prix": 0.0,
+        "ville": "London"
+    },
+    {
+        "adresse": "Tower of London, Tower Hill",
+        "date": "2025-04-02",
+        "categorie": "Attraction touristique",
+        "prix": 30.0,
+        "ville": "London"
+    },
+    {
+        "adresse": "Hyde Park",
+        "date": "2025-04-03",
+        "categorie": "Balade",
+        "prix": 0.0,
+        "ville": "London"
+    },
+    {
+        "adresse": "London Eye, Riverside Building",
+        "date": "2025-04-04",
+        "categorie": "Attraction touristique",
+        "prix": 27.0,
+        "ville": "London"
+    },
+    {
+        "adresse": "Camden Market",
+        "date": "2025-04-05",
+        "categorie": "Shopping",
+        "prix": 0.0,
+        "ville": "London"
+    },
+    {
+        "adresse": "West End Theatre",
+        "date": "2025-04-06",
+        "categorie": "Spectacle",
+        "prix": 45.0,
+        "ville": "London"
+    },
+    {
+        "adresse": "Brandenburg Gate",
+        "date": "2025-05-10",
+        "categorie": "Visite historique",
+        "prix": 0.0,
+        "ville": "Berlin"
+    },
+    {
+        "adresse": "Berlin TV Tower, Alexanderplatz",
+        "date": "2025-05-11",
+        "categorie": "Attraction touristique",
+        "prix": 20.0,
+        "ville": "Berlin"
+    },
+    {
+        "adresse": "East Side Gallery",
+        "date": "2025-05-12",
+        "categorie": "Art urbain",
+        "prix": 0.0,
+        "ville": "Berlin"
+    },
+    {
+        "adresse": "Tiergarten Park",
+        "date": "2025-05-13",
+        "categorie": "Balade",
+        "prix": 0.0,
+        "ville": "Berlin"
+    },
+    {
+        "adresse": "Checkpoint Charlie Museum",
+        "date": "2025-05-14",
+        "categorie": "Musée",
+        "prix": 15.0,
+        "ville": "Berlin"
+    },
+    {
+        "adresse": "Berlin Cathedral",
+        "date": "2025-05-15",
+        "categorie": "Visite culturelle",
+        "prix": 10.0,
+        "ville": "Berlin"
+    },
+    {
+        "adresse": "Colosseum, Piazza del Colosseo",
+        "date": "2025-06-01",
+        "categorie": "Attraction touristique",
+        "prix": 30.0,
+        "ville": "Rome"
+    },
+    {
+        "adresse": "Vatican Museums",
+        "date": "2025-06-02",
+        "categorie": "Visite culturelle",
+        "prix": 25.0,
+        "ville": "Rome"
+    },
+    {
+        "adresse": "Trevi Fountain",
+        "date": "2025-06-03",
+        "categorie": "Attraction touristique",
+        "prix": 0.0,
+        "ville": "Rome"
+    },
+    {
+        "adresse": "Piazza Navona",
+        "date": "2025-06-04",
+        "categorie": "Balade",
+        "prix": 0.0,
+        "ville": "Rome"
+    },
+    {
+        "adresse": "Pantheon",
+        "date": "2025-06-05",
+        "categorie": "Visite historique",
+        "prix": 12.0,
+        "ville": "Rome"
+    },
+    {
+        "adresse": "Spanish Steps",
+        "date": "2025-06-06",
+        "categorie": "Attraction touristique",
+        "prix": 0.0,
+        "ville": "Rome"
+    }
+]
