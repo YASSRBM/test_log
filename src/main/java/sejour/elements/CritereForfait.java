@@ -1,4 +1,4 @@
-package main.java.sejour.elements;
+package sejour.elements;
 
 public class CritereForfait {
     public int getDureeSejour() {

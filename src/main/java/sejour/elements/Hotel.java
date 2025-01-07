@@ -1,4 +1,4 @@
-package main.java.sejour.elements;
+package sejour.elements;
 
 public class Hotel {
     public String getAdresse() {
