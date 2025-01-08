@@ -20,6 +20,13 @@ import sejour.elements.*;
 
 
 public class DataHandler {
+
+
+    private List<Hotel> hotels = new ArrayList<>();
+    private List<Trajet> Trajets = new ArrayList<>();
+    private List<Activite> activites =  new ArrayList<>();
+    private Path folderPath = null;
+
     public DataHandler(Path folderPath){
         this.folderPath = folderPath;
     }
@@ -27,7 +34,6 @@ public class DataHandler {
     public DataHandler(){
 
     }
-    private Path folderPath;
 
     public List<Hotel> getHotels() {
         return hotels;
@@ -41,14 +47,6 @@ public class DataHandler {
         return Trajets;
     }
 
-    public List<Forfait> getForfaits() {
-        return forfaits;
-    }
-
-    private List<Hotel> hotels = new ArrayList<>();
-    private List<Forfait> forfaits;
-    private List<Trajet> Trajets;
-    private List<Activite> activites;
 
     public void initHotels() {
         try {
@@ -90,7 +88,8 @@ public class DataHandler {
 
                 Activite activite = new Activite();
                 activite.setAdresse(activityJson.getString("adresse"));
-                activite.setCategorie(activityJson.getString("categorie"));
+                String categorieStr = activityJson.getString("categorie");
+                activite.setCategorie(activite.fromString(categorieStr));
                 activite.setPrix(activityJson.getDouble("prix"));
 
                 // Convert the date string to a Date object
@@ -115,7 +114,7 @@ public class DataHandler {
 
     public void initTrajets() {
         try {
-            String trajetsJson = new String(Files.readAllBytes(Paths.get("data/trajet.json")));
+            String trajetsJson = new String(Files.readAllBytes(Paths.get("data/Trajet.json")));
             JSONArray trajetsArray = new JSONArray(trajetsJson);
 
             for (int i = 0; i < trajetsArray.length(); i++) {
