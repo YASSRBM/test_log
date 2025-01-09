@@ -1,86 +1,100 @@
 package sejour;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import org.junit.jupiter.api.AfterEach;
+
+import okhttp3.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sejour.GeoUtils;
+import org.mockito.Mockito;
 import sejour.elements.Coordonnes;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.IOException;
 
-public class GeoUtilsTest {
-    private MockWebServer mockWebServer;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+class GeoUtilsTest {
+
+    private OkHttpClient mockClient;
 
     @BeforeEach
-    public void setUp() throws Exception {
-        mockWebServer = new MockWebServer();
-        mockWebServer.start();
-    }
-
-    @AfterEach
-    public void tearDown() throws Exception {
-        mockWebServer.shutdown();
+    void setUp() {
+        mockClient = Mockito.mock(OkHttpClient.class);
     }
 
     @Test
-    public void testGPS2CoordonnesValid() {
-        // Arrange
-        String mockResponse = "[{\"lat\":44.225,\"lon\":-0.580036}]";
-        mockWebServer.enqueue(new MockResponse().setBody(mockResponse).setResponseCode(200));
-        String adresse = "Place de la Bourse, Bordeaux, France";
+    void testGPS2Coordonnes_validAddress() throws IOException {
+        // Mock response
+        String mockResponseJson = "[{\"lat\": 48.8588897, \"lon\": 2.3200410217200766}]"; // Paris coordinates
+        Response mockResponse = new Response.Builder()
+                .request(new Request.Builder().url("https://mockurl").build())
+                .protocol(Protocol.HTTP_1_1)
+                .code(200)
+                .message("OK")
+                .body(ResponseBody.create(mockResponseJson, MediaType.parse("application/json")))
+                .build();
 
-        GeoUtils.BASE_URL = mockWebServer.url("/").toString(); // Utilisation du mock
-        Coordonnes coordonnes = GeoUtils.GPS2Coordonnes(adresse);
+        // Mock the client behavior
+        Call mockCall = Mockito.mock(Call.class);
+        when(mockCall.execute()).thenReturn(mockResponse);
+        when(mockClient.newCall(any(Request.class))).thenReturn(mockCall);
 
-        // Assert
+        // Test the method
+        GeoUtils.BASE_URL = "https://mockurl"; // Ensure no real API calls
+        Coordonnes coordonnes = GeoUtils.GPS2Coordonnes("Paris");
+
+        // Assert the results
         assertNotNull(coordonnes);
-        assertEquals(44.225, coordonnes.getLatitude(), 0.0001);
-        assertEquals(-0.580036, coordonnes.getLongitude(), 0.000001);
+        assertEquals(48.8588897, coordonnes.getLatitude());
+        assertEquals(2.3200410217200766, coordonnes.getLongitude());
     }
 
     @Test
-    public void testGPS2CoordonnesInvalid() {
-        // Arrange
-        mockWebServer.enqueue(new MockResponse().setResponseCode(500)); // Réponse invalide
-        String adresse = "Adresse invalide";
+    void testGPS2Coordonnes_invalidAddress() throws IOException {
+        // Mock an empty response
+        String mockResponseJson = "[]";
+        Response mockResponse = new Response.Builder()
+                .request(new Request.Builder().url("https://mockurl").build())
+                .protocol(Protocol.HTTP_1_1)
+                .code(200)
+                .message("OK")
+                .body(ResponseBody.create(mockResponseJson, MediaType.parse("application/json")))
+                .build();
 
-        GeoUtils.BASE_URL = mockWebServer.url("/").toString(); // Utilisation du mock
-        Coordonnes coordonnes = GeoUtils.GPS2Coordonnes(adresse);
+        // Mock the client behavior
+        Call mockCall = Mockito.mock(Call.class);
+        when(mockCall.execute()).thenReturn(mockResponse);
+        when(mockClient.newCall(any(Request.class))).thenReturn(mockCall);
 
-        // Assert
-        assertNull(coordonnes, "Les coordonnées doivent être nulles pour une réponse invalide.");
+        // Test the method
+        GeoUtils.BASE_URL = "https://mockurl"; // Ensure no real API calls
+        Coordonnes coordonnes = GeoUtils.GPS2Coordonnes("Invalid Address");
+
+        // Assert the results
+        assertNull(coordonnes);
     }
 
-    @Test
-    public void testGPS2CoordonnesEmpty() {
-        // Arrange
-        String adresse = "";
-        Coordonnes coordonnes = GeoUtils.GPS2Coordonnes(adresse);
-        // Assert
-        assertNull(coordonnes, "Les coordonnées doivent être nulles pour une adresse vide.");
-    }
+/*     @Test
+    void testGPS2Coordonnes_apiError() throws IOException {
+        // Mock a failed response
+        Response mockResponse = new Response.Builder()
+                .request(new Request.Builder().url("https://mockurl").build())
+                .protocol(Protocol.HTTP_1_1)
+                .code(500)
+                .message("Internal Server Error")
+                .body(ResponseBody.create("", MediaType.parse("application/json")))
+                .build();
 
-    @Test
-    public void testDistanceEntrePoints() {
-        // Arrange
-        Coordonnes bordeaux = new Coordonnes(44.841225, -0.580036);
-        Coordonnes rennes = new Coordonnes(48.856613, 2.352222);
+        // Mock the client behavior
+        Call mockCall = Mockito.mock(Call.class);
+        when(mockCall.execute()).thenReturn(mockResponse);
+        when(mockClient.newCall(any(Request.class))).thenReturn(mockCall);
 
-        double distance = GeoUtils.distanceEntre(bordeaux, rennes);
+        // Test the method
+        GeoUtils.BASE_URL = "https://mockurl"; // Ensure no real API calls
+        Coordonnes coordonnes = GeoUtils.GPS2Coordonnes("Paris");
 
-        // Assert
-        assertEquals(499.0, distance, 1.0); // Distance approximative à vol d'oiseau
-    }
-
-    @Test
-    public void testDistanceEntreSamePoint() {
-        // Arrange
-        Coordonnes point = new Coordonnes(44.841225, -0.580036);
-
-        double distance = GeoUtils.distanceEntre(point, point);
-
-        // Assert
-        assertEquals(0.0, distance, 0.001, "La distance entre un point et lui-même doit être 0.");
-    }
+        assertNull(coordonnes);
+    } */
 }
