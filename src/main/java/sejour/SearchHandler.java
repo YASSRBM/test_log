@@ -8,9 +8,17 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class SearchHandler {
+<<<<<<< HEAD
     private static final Logger logger = Logger.getLogger(SearchHandler.class.getName());
     DataHandler dataHandler = new DataHandler(Path.of("data"));
     
+=======
+    public SearchHandler(DataHandler dataHandler) {
+        this.dataHandler = dataHandler;
+    }
+
+    private DataHandler dataHandler = new DataHandler(Path.of("data"));
+>>>>>>> 98150d4f13fda244772fb5354784f7eb065430ce
 
     public List<Forfait> Search(CritereHotel critereHotel, CritereTrajet critereTrajet, CritereActivite critereActivite, CritereForfait critereForfait) {
         // logger.info("Starting search for forfaits...");

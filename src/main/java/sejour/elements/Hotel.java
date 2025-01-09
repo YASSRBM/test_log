@@ -1,6 +1,14 @@
 package sejour.elements;
 
 public class Hotel {
+    public Hotel(String adresse, String ville, int classement, double prix) {
+        this.adresse = adresse;
+        this.ville = ville;
+        this.classement = classement;
+        this.prix = prix;
+    }
+    public Hotel(){}
+
     public String getAdresse() {
         return adresse;
     }

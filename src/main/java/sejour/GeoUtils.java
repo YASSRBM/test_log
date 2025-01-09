@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 
 public class GeoUtils {
     public static final double EARTH_RADIUS = 6371;
+    public static String BASE_URL = "https://geocode.maps.co/search?q="; 
 
     public static Coordonnes GPS2Coordonnes(String adresse) {
         OkHttpClient client = new OkHttpClient();
@@ -36,7 +37,7 @@ public class GeoUtils {
                 .build();
     
         try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
+            if (!response.isSuccessful() ) {
                 throw new IOException("Unexpected response " + response);
             }
     
@@ -47,8 +48,6 @@ public class GeoUtils {
                 JSONObject jObject = jsonArray.getJSONObject(0);
                 double latitude = jObject.getDouble("lat");
                 double longitude = jObject.getDouble("lon");
-                System.out.println("THE DATA RECIEVED FROM THE API 111111111111111111111111111111111111111111111111111111");
-                System.out.println(responseStr);
                 return new Coordonnes(latitude, longitude);
             } else {
                 throw new IOException("No coordinates found for the given address: " + adresse);
@@ -60,7 +59,7 @@ public class GeoUtils {
         return null;
     }
 
-    public static double distanceEntre(Coordonnes pt1, Coordonnes pt2){
+    public static double distanceEntre(Coordonnes pt1, Coordonnes pt2) {
         // Convert degrees to radians
         double lat1Rad = Math.toRadians(pt1.getLatitude());
         double lon1Rad = Math.toRadians(pt1.getLongitude());
@@ -80,5 +79,4 @@ public class GeoUtils {
         // Distance in km
         return EARTH_RADIUS * c;
     }
-
 }
