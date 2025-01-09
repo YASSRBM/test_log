@@ -1,16 +1,18 @@
 package sejour.elements;
 
 public class CritereTrajet {
+    private ModeTrajet modeTrajet;
+    private PrioriteTrajet prioriteTrajet;
 
     public enum ModeTrajet {AVION, TRAIN}
     public enum PrioriteTrajet {TEMPS, PRIX}
 
-    public CritereTrajet(String modeTrajet, PrioriteTrajet prioriteTrajet) {
+    public CritereTrajet(ModeTrajet modeTrajet, PrioriteTrajet prioriteTrajet) {
         this.modeTrajet = modeTrajet;
         this.prioriteTrajet = prioriteTrajet;
     }
 
-    public String getModeTrajet() {
+    public ModeTrajet getModeTrajet() {
         return modeTrajet;
     }
 
@@ -18,7 +20,6 @@ public class CritereTrajet {
         return prioriteTrajet;
     }
 
-    private String modeTrajet;
-    private PrioriteTrajet prioriteTrajet;
+
 
 }
