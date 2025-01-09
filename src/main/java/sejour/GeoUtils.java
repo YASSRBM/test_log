@@ -19,11 +19,12 @@ public class GeoUtils {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
+            if (!response.isSuccessful() ) {
                 throw new IOException("Unexpected response " + response);
             }
 
             String responseStr = response.body().string();
+            if(responseStr.isEmpty() || !responseStr.startsWith("{")){ return null; }
 
             JSONObject jObject = new JSONObject(responseStr.substring(1, responseStr.length() - 1));
             double longitude = jObject.getDouble("lon");

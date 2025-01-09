@@ -5,6 +5,15 @@ import java.util.Date;
 
 
 public class Activite {
+
+    public Activite(String adresse, Date date, Categorie categorie, double prix) {
+        this.adresse = adresse;
+        this.date = date;
+        this.categorie = categorie;
+        this.prix = prix;
+    }
+    public Activite(){}
+
     public enum Categorie {SPORT, MUSIQUE, TOURISTIQUE, SHOPPING, CULTURELLE}
 
     public String getAdresse() {

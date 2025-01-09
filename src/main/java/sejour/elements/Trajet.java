@@ -3,6 +3,15 @@ package sejour.elements;
 import java.time.Instant;
 
 public class Trajet {
+    public Trajet(String villeDepart, String villeArrivee, Instant tempsDepart, Instant tempsArrivee, String modeTransport, double prix) {
+        this.villeDepart = villeDepart;
+        this.villeArrivee = villeArrivee;
+        this.tempsDepart = tempsDepart;
+        this.tempsArrivee = tempsArrivee;
+        this.modeTransport = modeTransport;
+        this.prix = prix;
+    }
+    public Trajet(){}
 
     public String getVilleDepart() {
         return villeDepart;

@@ -5,12 +5,12 @@ public class CritereTrajet {
     public enum ModeTrajet {AVION, TRAIN}
     public enum PrioriteTrajet {TEMPS, PRIX}
 
-    public CritereTrajet(ModeTrajet modeTrajet, PrioriteTrajet prioriteTrajet) {
+    public CritereTrajet(String modeTrajet, PrioriteTrajet prioriteTrajet) {
         this.modeTrajet = modeTrajet;
         this.prioriteTrajet = prioriteTrajet;
     }
 
-    public ModeTrajet getModeTrajet() {
+    public String getModeTrajet() {
         return modeTrajet;
     }
 
@@ -18,7 +18,7 @@ public class CritereTrajet {
         return prioriteTrajet;
     }
 
-    private ModeTrajet modeTrajet;
+    private String modeTrajet;
     private PrioriteTrajet prioriteTrajet;
 
 }

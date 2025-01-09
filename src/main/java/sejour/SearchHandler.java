@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchHandler {
-    DataHandler dataHandler = new DataHandler(Path.of("data"));
+    public SearchHandler(DataHandler dataHandler) {
+        this.dataHandler = dataHandler;
+    }
+
+    private DataHandler dataHandler = new DataHandler(Path.of("data"));
 
     public List<Forfait> Search(CritereHotel critereHotel, CritereTrajet critereTrajet, CritereActivite critereActivite, CritereForfait critereForfait) {
         List<Hotel> selectedHotels = SearchHotel(critereHotel);
