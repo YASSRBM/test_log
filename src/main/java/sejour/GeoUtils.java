@@ -10,13 +10,12 @@ import java.io.IOException;
 
 public class GeoUtils {
     public static final double EARTH_RADIUS = 6371;
+    public static String BASE_URL = "https://geocode.maps.co/search?q="; 
 
-    public static Coordonnes GPS2Coordonnes(String adresse){
+    public static Coordonnes GPS2Coordonnes(String adresse) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(
-                        String.format(" https://geocode.maps.co/search?q=%s",
-                                adresse))
+                .url(BASE_URL + adresse) 
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
@@ -26,7 +25,7 @@ public class GeoUtils {
 
             String responseStr = response.body().string();
 
-            JSONObject jObject = new JSONObject(responseStr.substring(1, responseStr.length()-1));
+            JSONObject jObject = new JSONObject(responseStr.substring(1, responseStr.length() - 1));
             double longitude = jObject.getDouble("lon");
             double latitude = jObject.getDouble("lat");
             return new Coordonnes(latitude, longitude);
@@ -36,7 +35,7 @@ public class GeoUtils {
         return null;
     }
 
-    public static double distanceEntre(Coordonnes pt1, Coordonnes pt2){
+    public static double distanceEntre(Coordonnes pt1, Coordonnes pt2) {
         // Convert degrees to radians
         double lat1Rad = Math.toRadians(pt1.getLatitude());
         double lon1Rad = Math.toRadians(pt1.getLongitude());
@@ -56,5 +55,4 @@ public class GeoUtils {
         // Distance in km
         return EARTH_RADIUS * c;
     }
-
 }
