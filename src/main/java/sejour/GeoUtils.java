@@ -3,36 +3,60 @@ package sejour;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import sejour.elements.Coordonnes;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class GeoUtils {
     public static final double EARTH_RADIUS = 6371;
 
-    public static Coordonnes GPS2Coordonnes(String adresse){
+    public static Coordonnes GPS2Coordonnes(String adresse) {
         OkHttpClient client = new OkHttpClient();
+        String apiKey = "677fd8e19d2ed057306843cjxc9324a";
+    
+        // Remove any leading/trailing whitespace from the address
+        adresse = adresse.trim();
+    
+        // Replace commas with spaces in the address
+        adresse = adresse.replace(",", " ");
+    
+        // Encode the address to handle special characters
+        String encodedAdresse = URLEncoder.encode(adresse, StandardCharsets.UTF_8);
+    
+        // Build the request URL with the encoded address and API key
+        String url = String.format("https://geocode.maps.co/search?q=%s&api_key=%s", encodedAdresse, apiKey);
+    
         Request request = new Request.Builder()
-                .url(
-                        String.format(" https://geocode.maps.co/search?q=%s",
-                                adresse))
+                .url(url)
                 .build();
-
+    
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
                 throw new IOException("Unexpected response " + response);
             }
-
+    
             String responseStr = response.body().string();
-
-            JSONObject jObject = new JSONObject(responseStr.substring(1, responseStr.length()-1));
-            double longitude = jObject.getDouble("lon");
-            double latitude = jObject.getDouble("lat");
-            return new Coordonnes(latitude, longitude);
+            JSONArray jsonArray = new JSONArray(responseStr);
+    
+            if (jsonArray.length() > 0) {
+                JSONObject jObject = jsonArray.getJSONObject(0);
+                double latitude = jObject.getDouble("lat");
+                double longitude = jObject.getDouble("lon");
+                System.out.println("THE DATA RECIEVED FROM THE API 111111111111111111111111111111111111111111111111111111");
+                System.out.println(responseStr);
+                return new Coordonnes(latitude, longitude);
+            } else {
+                throw new IOException("No coordinates found for the given address: " + adresse);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    
         return null;
     }
 

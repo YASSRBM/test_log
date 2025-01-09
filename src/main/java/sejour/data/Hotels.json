@@ -148,5 +148,30 @@
         "ville": "Berlin",
         "classement": 1,
         "prix": 60.0
+    },
+
+    {
+        "adresse": "10 Rue de Rivoli",
+        "ville": "Paris",
+        "classement": 5,
+        "prix": 250.0
+    },
+    {
+        "adresse": "55 Avenue des Champs-Élysées",
+        "ville": "Paris",
+        "classement": 4,
+        "prix": 180.0
+    },
+    {
+        "adresse": "1 Rue de la Paix",
+        "ville": "Paris",
+        "classement": 5,
+        "prix": 300.0
+    },
+    {
+        "adresse": "20 Rue du Faubourg Saint-Honoré",
+        "ville": "Paris",
+        "classement": 4,
+        "prix": 200.0
     }
 ]

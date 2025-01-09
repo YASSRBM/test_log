@@ -3,8 +3,8 @@ package sejour.elements;
 import java.util.List;
 
 public class Forfait {
-    private String transportAlle;
-    private String transportRetour;
+    private Trajet trajetAlle;
+    private Trajet trajetRetour;
     private Hotel hotel;
     private List<Activite> activites;
 
@@ -24,20 +24,20 @@ public class Forfait {
         this.activites = activites;
     }
 
-    public String getTransportRetour() {
-        return transportRetour;
+    public Trajet getTransportRetour() {
+        return trajetRetour;
     }
 
-    public void setTransportRetour(String transportRetour) {
-        this.transportRetour = transportRetour;
+    public void setTransportRetour(Trajet transportRetour) {
+        this.trajetRetour = transportRetour;
     }
 
-    public String getTransportAlle() {
-        return transportAlle;
+    public Trajet getTransportAlle() {
+        return trajetAlle;
     }
 
-    public void setTransportAlle(String transportAlle) {
-        this.transportAlle = transportAlle;
+    public void setTransportAlle(Trajet transportAlle) {
+        this.trajetAlle = transportAlle;
     }
 
 

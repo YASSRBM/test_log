@@ -18,4 +18,11 @@ public class CritereHotel {
 
     private int minClassement;
     private PrioriteHotel prioriteHotel;
+    @Override
+    public String toString() {
+        return "CritereHotel{" +
+                "minClassement=" + minClassement +
+                ", prioriteHotel=" + prioriteHotel +
+                '}';
+    }
 }
