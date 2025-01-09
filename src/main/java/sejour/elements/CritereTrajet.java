@@ -2,8 +2,8 @@ package sejour.elements;
 
 public class CritereTrajet {
 
-    private enum ModeTrajet {AVION, TRAIN}
-    private enum PrioriteTrajet {TEMPS, PRIX}
+    public enum ModeTrajet {AVION, TRAIN}
+    public enum PrioriteTrajet {TEMPS, PRIX}
 
     public CritereTrajet(ModeTrajet modeTrajet, PrioriteTrajet prioriteTrajet) {
         this.modeTrajet = modeTrajet;

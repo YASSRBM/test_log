@@ -1,7 +1,7 @@
 package sejour.elements;
 
 public class CritereHotel {
-    private enum PrioriteHotel {CLASSEMENT, PRIX}
+    public enum PrioriteHotel {CLASSEMENT, PRIX}
 
     public CritereHotel(int minClassement, PrioriteHotel prioriteHotel) {
         this.minClassement = minClassement;
