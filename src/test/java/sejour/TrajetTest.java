@@ -17,7 +17,7 @@ public class TrajetTest {
         trajet.setVilleArrivee("Paris");
         trajet.setTempsDepart(Instant.parse("2025-01-01T08:00:00Z"));
         trajet.setTempsArrivee(Instant.parse("2025-01-01T12:00:00Z"));
-        trajet.setModeTransport("Train");
+        trajet.setModeTransport(Trajet.ModeTrajet.TRAIN);
         trajet.setPrix(45.50);
 
         // Act & Assert
@@ -25,7 +25,7 @@ public class TrajetTest {
         assertEquals("Paris", trajet.getVilleArrivee());
         assertEquals(Instant.parse("2025-01-01T08:00:00Z"), trajet.getTempsDepart());
         assertEquals(Instant.parse("2025-01-01T12:00:00Z"), trajet.getTempsArrivee());
-        assertEquals("Train", trajet.getModeTransport());
+        assertEquals(Trajet.ModeTrajet.TRAIN, trajet.getModeTransport());
         assertEquals(45.50, trajet.getPrix());
     }
 

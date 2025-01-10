@@ -105,7 +105,7 @@ public class SejourUI extends JFrame {
             );
         
             CritereTrajet critereTrajet = new CritereTrajet(
-                    CritereTrajet.ModeTrajet.valueOf(modeTransport.getSelectedItem().toString()),
+                    Trajet.ModeTrajet.valueOf(modeTransport.getSelectedItem().toString()),
                     CritereTrajet.PrioriteTrajet.valueOf(prioriteTransport.getSelectedItem().toString())
             );
         

@@ -12,11 +12,18 @@ public class SearchHandler {
     public SearchHandler(DataHandler dataHandler) {
         this.dataHandler = dataHandler;
     }
+
+    public SearchHandler(DataHandler dataHandler, GeoUtils geoUtils) {
+        this.geoUtils = geoUtils;
+        this.dataHandler = dataHandler;
+    }
+
     public SearchHandler() {
 
     }
 
     private DataHandler dataHandler = new DataHandler(Path.of("data"));
+    private GeoUtils geoUtils = new GeoUtils();
 
     public List<Forfait> Search(CritereHotel critereHotel, CritereTrajet critereTrajet, CritereActivite critereActivite, CritereForfait critereForfait) {
         // logger.info("Starting search for forfaits...");
@@ -43,9 +50,9 @@ public class SearchHandler {
     
                         List<Activite> activitesProches = new ArrayList<>();
                         for (Activite activite : selectedActivites) {
-                            double distance = GeoUtils.distanceEntre(
-                                    GeoUtils.GPS2Coordonnes(hotel.getAdresse()),
-                                    GeoUtils.GPS2Coordonnes(activite.getAdresse())
+                            double distance = geoUtils.distanceEntre(
+                                    geoUtils.GPS2Coordonnes(hotel.getAdresse()),
+                                    geoUtils.GPS2Coordonnes(activite.getAdresse())
                             );
                             logger.info("Distance between hotel and activity: " + distance);
                             if (distance <= critereActivite.getDistanceMax()) {
@@ -126,7 +133,7 @@ public class SearchHandler {
         logger.info("Total trajets: " + tousTrajet.size());
         List<Trajet> selectedTrajet = new ArrayList<>();
         for(Trajet trajet : tousTrajet){
-            if(trajet.getModeTransport().equalsIgnoreCase(critere.getModeTrajet().toString())){
+            if(trajet.getModeTransport() == critere.getModeTrajet()){
                 selectedTrajet.add(trajet);
             }
         }

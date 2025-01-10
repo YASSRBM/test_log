@@ -17,10 +17,13 @@ import static org.mockito.Mockito.*;
 class GeoUtilsTest {
 
     private OkHttpClient mockClient;
+    private GeoUtils geoUtils;
+
 
     @BeforeEach
     void setUp() {
         mockClient = Mockito.mock(OkHttpClient.class);
+        geoUtils = new GeoUtils();
     }
 
     @Test
@@ -42,7 +45,7 @@ class GeoUtilsTest {
 
         // Test the method
         GeoUtils.BASE_URL = "https://mockurl"; // Ensure no real API calls
-        Coordonnes coordonnes = GeoUtils.GPS2Coordonnes("Paris");
+        Coordonnes coordonnes = geoUtils.GPS2Coordonnes("Paris");
 
         // Assert the results
         assertNotNull(coordonnes);
@@ -69,7 +72,7 @@ class GeoUtilsTest {
 
         // Test the method
         GeoUtils.BASE_URL = "https://mockurl"; // Ensure no real API calls
-        Coordonnes coordonnes = GeoUtils.GPS2Coordonnes("Invalid Address");
+        Coordonnes coordonnes = geoUtils.GPS2Coordonnes("Invalid Address");
 
         // Assert the results
         assertNull(coordonnes);

@@ -3,7 +3,16 @@ package sejour.elements;
 import java.time.Instant;
 
 public class Trajet {
-    public Trajet(String villeDepart, String villeArrivee, Instant tempsDepart, Instant tempsArrivee, String modeTransport, double prix) {
+
+    public enum ModeTrajet {AVION, TRAIN, VOITURE, BUS}
+    private String villeDepart;
+    private String villeArrivee;
+    private Instant tempsDepart;
+    private Instant tempsArrivee;
+    private ModeTrajet modeTransport;
+    private double prix;
+
+    public Trajet(String villeDepart, String villeArrivee, Instant tempsDepart, Instant tempsArrivee, ModeTrajet modeTransport, double prix) {
         this.villeDepart = villeDepart;
         this.villeArrivee = villeArrivee;
         this.tempsDepart = tempsDepart;
@@ -45,11 +54,11 @@ public class Trajet {
         this.tempsArrivee = tempsArrivee;
     }
 
-    public String getModeTransport() {
+    public ModeTrajet getModeTransport() {
         return modeTransport;
     }
 
-    public void setModeTransport(String modeTransport) {
+    public void setModeTransport(ModeTrajet modeTransport) {
         this.modeTransport = modeTransport;
     }
 
@@ -61,12 +70,22 @@ public class Trajet {
         this.prix = prix;
     }
 
-    private String villeDepart;
-    private String villeArrivee;
-    private Instant tempsDepart;
-    private Instant tempsArrivee;
-    private String modeTransport;
-    private double prix;
+    public ModeTrajet fromString(String modeTrajetStr) {
+        switch (modeTrajetStr.toUpperCase()) {
+            case "AVION":
+                return ModeTrajet.AVION;
+            case "TRAIN":
+                return ModeTrajet.TRAIN;
+            case "VOITURE":
+                return ModeTrajet.VOITURE;
+            case "BUS":
+                return ModeTrajet.BUS;
+            default:
+                throw new IllegalArgumentException("Unknown category: " + modeTrajetStr);
+        }
+    }
+
+
 
     
 

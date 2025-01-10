@@ -38,7 +38,7 @@ public class DataHandlerTest {
             // Act
             DataHandler.initHotels();
 
-            
+
             //Assert
             List<Hotel> hotels = DataHandler.getHotels();
             assertNotNull(hotels);
@@ -56,7 +56,7 @@ public class DataHandlerTest {
         }
     }
 
-    @Test 
+    @Test
     public void testinitActivities(){
 
         String mockJson = "[\n" +
@@ -83,7 +83,7 @@ public class DataHandlerTest {
                 "    }\n" +
                 "]";
 
-    
+
         try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
             mockedFiles.when(() -> Files.readAllBytes(Paths.get("data/Activities.json")))
                        .thenReturn(mockJson.getBytes());
@@ -95,7 +95,7 @@ public class DataHandlerTest {
             assertEquals("Seine River, Quai de la Tournelle", Activities.get(2).getAdresse());
             assertEquals(30.0, Activities.get(2).getPrix());
 
-        } 
+        }
 
     }
 
@@ -119,11 +119,11 @@ public class DataHandlerTest {
             "        \"prix\": 120.0\n" +
             "    }\n" +
             "]";
-        
+
             try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
                 mockedFiles.when(() -> Files.readAllBytes(Paths.get("data/Trajet.json")))
                            .thenReturn(mockJson.getBytes());
-            
+
             DataHandler.initTrajets();
 
             List<Trajet> Trajets= DataHandler.getTrajets();

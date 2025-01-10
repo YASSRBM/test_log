@@ -137,7 +137,7 @@ public class DataHandler {
                 trajet.setVilleArrivee(trajetJson.getString("villeArrivee"));
                 trajet.setTempsDepart(Instant.parse(trajetJson.getString("tempsDepart")));
                 trajet.setTempsArrivee(Instant.parse(trajetJson.getString("tempsArrivee")));
-                trajet.setModeTransport(trajetJson.getString("modeTransport"));
+                trajet.setModeTransport(trajet.fromString(trajetJson.getString("modeTransport")));
                 trajet.setPrix(trajetJson.getDouble("prix"));
                 Trajets.add(trajet);
             }
