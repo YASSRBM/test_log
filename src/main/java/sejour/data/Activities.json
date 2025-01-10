@@ -1,34 +1,35 @@
 [
     {
-        "adresse": "Louvre Museum, Rue de Rivoli",
+        "adresse": "Louvre Museum Rue de Rivoli",
         "date": "2025-03-15",
         "categorie": "CULTURELLE",
         "prix": 25.0,
         "ville": "Paris"
     },
     {
-        "adresse": "Eiffel Tower, Champ de Mars",
+        "adresse": "Eiffel Tower Champ de Mars",
         "date": "2025-03-16",
         "categorie": "TOURISTIQUE",
         "prix": 20.0,
         "ville": "Paris"
-    },
+    }
+    ,
     {
-        "adresse": "Seine River, Quai de la Tournelle",
+        "adresse": "Seine River Quai de la Tournelle",
         "date": "2025-03-17",
         "categorie": "TOURISTIQUE",
         "prix": 30.0,
         "ville": "Paris"
     },
     {
-        "adresse": "Montmartre, Place du Tertre",
+        "adresse": "Montmartre Place du Tertre",
         "date": "2025-03-18",
         "categorie": "TOURISTIQUE",
         "prix": 10.0,
         "ville": "Paris"
     },
     {
-        "adresse": "Champs-Élysées",
+        "adresse": "Champs Elysees",
         "date": "2025-03-19",
         "categorie": "SHOPPING",
         "prix": 0.0,
@@ -42,14 +43,14 @@
         "ville": "Paris"
     },
     {
-        "adresse": "British Museum, Great Russell Street",
+        "adresse": "British Museum Great Russell Street",
         "date": "2025-04-01",
         "categorie": "CULTURELLE",
         "prix": 0.0,
         "ville": "London"
     },
     {
-        "adresse": "Tower of London, Tower Hill",
+        "adresse": "Tower of London Tower Hill",
         "date": "2025-04-02",
         "categorie": "TOURISTIQUE",
         "prix": 30.0,
@@ -63,7 +64,7 @@
         "ville": "London"
     },
     {
-        "adresse": "London Eye, Riverside Building",
+        "adresse": "London Eye Riverside Building",
         "date": "2025-04-04",
         "categorie": "TOURISTIQUE",
         "prix": 27.0,
@@ -91,7 +92,7 @@
         "ville": "Berlin"
     },
     {
-        "adresse": "Berlin TV Tower, Alexanderplatz",
+        "adresse": "Berlin TV Tower Alexanderplatz",
         "date": "2025-05-11",
         "categorie": "TOURISTIQUE",
         "prix": 20.0,
@@ -126,7 +127,7 @@
         "ville": "Berlin"
     },
     {
-        "adresse": "Colosseum, Piazza del Colosseo",
+        "adresse": "Colosseum Piazza del Colosseo",
         "date": "2025-06-01",
         "categorie": "TOURISTIQUE",
         "prix": 30.0,
@@ -166,5 +167,77 @@
         "categorie": "TOURISTIQUE",
         "prix": 0.0,
         "ville": "Rome"
+    },
+    {
+        "adresse": "Parc des Buttes Chaumont",
+        "date": "2025-03-21",
+        "categorie": "TOURISTIQUE",
+        "prix": 0.0,
+        "ville": "Paris"
+    },
+    {
+        "adresse": "Le Marais Paris",
+        "date": "2025-03-22",
+        "categorie": "HISTORIQUE",
+        "prix": 0.0,
+        "ville": "Paris"
+    },
+    {
+        "adresse": "Trafalgar Square",
+        "date": "2025-04-07",
+        "categorie": "HISTORIQUE",
+        "prix": 0.0,
+        "ville": "London"
+    },
+    {
+        "adresse": "Regent Street London",
+        "date": "2025-04-08",
+        "categorie": "SHOPPING",
+        "prix": 0.0,
+        "ville": "London"
+    },
+    {
+        "adresse": "Tempelhofer Feld",
+        "date": "2025-05-16",
+        "categorie": "TOURISTIQUE",
+        "prix": 0.0,
+        "ville": "Berlin"
+    },
+    {
+        "adresse": "Gendarmenmarkt Berlin",
+        "date": "2025-05-17",
+        "categorie": "HISTORIQUE",
+        "prix": 0.0,
+        "ville": "Berlin"
+    },
+    {
+        "adresse": "Villa Borghese Rome",
+        "date": "2025-06-07",
+        "categorie": "TOURISTIQUE",
+        "prix": 0.0,
+        "ville": "Rome"
+    },
+    {
+        "adresse": "Via Appia Rome",
+        "date": "2025-06-08",
+        "categorie": "HISTORIQUE",
+        "prix": 0.0,
+        "ville": "Rome"
+    },
+    {
+        "adresse": "Basilica of the Sacred Heart Paris",
+        "date": "2025-03-23",
+        "categorie": "CULTURELLE",
+        "prix": 0.0,
+        "ville": "Paris"
+    },
+    {
+        "adresse": "Disneyland Paris",
+        "date": "2025-03-24",
+        "categorie": "HISTORIQUE",
+        "prix": 0.0,
+        "ville": "Paris"
+    
     }
 ]
+       

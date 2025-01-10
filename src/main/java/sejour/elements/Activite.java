@@ -14,7 +14,7 @@ public class Activite {
     }
     public Activite(){}
 
-    public enum Categorie {SPORT, MUSIQUE, TOURISTIQUE, SHOPPING, CULTURELLE}
+    public enum Categorie {SPORT, MUSIQUE, TOURISTIQUE, SHOPPING, CULTURELLE, HISTORIQUE}
 
     public String getAdresse() {
         return adresse;
@@ -60,6 +60,8 @@ public class Activite {
                 return Categorie.SHOPPING;
             case "CULTURELLE":
                 return Categorie.CULTURELLE;
+            case "HISTORIQUE":
+                return Categorie.HISTORIQUE;
             default:
                 throw new IllegalArgumentException("Unknown category: " + categorieStr);
         }

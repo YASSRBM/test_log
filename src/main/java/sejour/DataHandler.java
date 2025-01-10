@@ -29,7 +29,6 @@ public class DataHandler {
 
     public DataHandler(Path folderPath){
         this.folderPath = folderPath;
-        initData();
     }
 
     public DataHandler(){
@@ -56,8 +55,12 @@ public class DataHandler {
 
     public void initHotels() {
         try {
-        // Use a relative path from the project's root directory
-        Path hotelsFilePath = Paths.get("src/main/java/sejour/data/Hotels.json");
+            Path hotelsFilePath;
+            if(folderPath==null) 
+            hotelsFilePath = Paths.get("src/main/java/sejour/data/Hotels.json");
+            else {
+                hotelsFilePath=Paths.get(folderPath.toString()+"/Hotels.json");
+            }
         
 
         String hotelsJson = new String(Files.readAllBytes(hotelsFilePath));
@@ -89,8 +92,13 @@ public class DataHandler {
 
     public void initActivites() {
         try {
-        // Use a relative path from the project's root directory
-        Path activitiesFilePath = Paths.get("src/main/java/sejour/data/Activities.json");
+            Path activitiesFilePath;
+            if(folderPath==null) 
+               activitiesFilePath = Paths.get("src/main/java/sejour/data/Activities.json");
+            else {
+                activitiesFilePath=Paths.get(folderPath.toString()+"/Activities.json");
+            }
+
         String activitiesJson = new String(Files.readAllBytes(activitiesFilePath));
             JSONArray activitiesArray = new JSONArray(activitiesJson);
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -115,9 +123,6 @@ public class DataHandler {
                 activites.add(activite);
             }
 
-            // for (Activite activite : activites) {
-                // System.out.println("Activite: " + activite.getAdresse() + ", Date: " + activite.getDate() + ", Categorie: " + activite.getCategorie() + ", Prix: " + activite.getPrix());
-            // }
         } catch (IOException e) {
             System.err.println("Error reading Activities.json file: " + e.getMessage());
         }
@@ -126,7 +131,13 @@ public class DataHandler {
 
     public void initTrajets() {
         try {
-            Path trajetsFilePath = Paths.get("src/main/java/sejour/data/Trajet.json");
+            Path trajetsFilePath;
+            if(folderPath==null) 
+                trajetsFilePath = Paths.get("src/main/java/sejour/data/Trajet.json");
+            else {
+                trajetsFilePath=Paths.get(folderPath.toString()+"/Trajet.json");
+            }
+        
             String trajetsJson = new String(Files.readAllBytes(trajetsFilePath));
             JSONArray trajetsArray = new JSONArray(trajetsJson);
 
