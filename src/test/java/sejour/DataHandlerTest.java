@@ -32,7 +32,7 @@ public class DataHandlerTest {
         "]";
 
         try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
-            mockedFiles.when(() -> Files.readAllBytes(Paths.get("data/Hotels.json")))
+            mockedFiles.when(() -> Files.readAllBytes(Paths.get("src/main/java/sejour/data/Hotels.json")))
                        .thenReturn(mockJson.getBytes());
 
             // Act
@@ -85,7 +85,7 @@ public class DataHandlerTest {
 
 
         try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
-            mockedFiles.when(() -> Files.readAllBytes(Paths.get("data/Activities.json")))
+            mockedFiles.when(() -> Files.readAllBytes(Paths.get("src/main/java/sejour/data/Activities.json")))
                        .thenReturn(mockJson.getBytes());
 
             DataHandler.initActivites();
@@ -107,7 +107,7 @@ public class DataHandlerTest {
             "        \"villeArrivee\": \"London\",\n" +
             "        \"tempsDepart\": \"2025-02-01T08:00:00Z\",\n" +
             "        \"tempsArrivee\": \"2025-02-01T10:30:00Z\",\n" +
-            "        \"modeTransport\": \"train\",\n" +
+            "        \"modeTransport\": \"TRAIN\",\n" +
             "        \"prix\": 90.0\n" +
             "    },\n" +
             "    {\n" +
@@ -115,13 +115,13 @@ public class DataHandlerTest {
             "        \"villeArrivee\": \"London\",\n" +
             "        \"tempsDepart\": \"2025-02-01T14:00:00Z\",\n" +
             "        \"tempsArrivee\": \"2025-02-01T15:30:00Z\",\n" +
-            "        \"modeTransport\": \"avion\",\n" +
+            "        \"modeTransport\": \"AVION\",\n" +
             "        \"prix\": 120.0\n" +
             "    }\n" +
             "]";
 
             try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
-                mockedFiles.when(() -> Files.readAllBytes(Paths.get("data/Trajet.json")))
+                mockedFiles.when(() -> Files.readAllBytes(Paths.get("src/main/java/sejour/data/Trajet.json")))
                            .thenReturn(mockJson.getBytes());
 
             DataHandler.initTrajets();
@@ -130,7 +130,7 @@ public class DataHandlerTest {
             assertNotNull(Trajets);
             assertEquals("Paris", Trajets.get(0).getVilleDepart());
             assertEquals("London", Trajets.get(0).getVilleArrivee());
-            assertEquals("avion", Trajets.get(1).getModeTransport());
+            assertEquals("AVION", Trajets.get(1).getModeTransport().toString());
 
             }
         }
