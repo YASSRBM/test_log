@@ -71,7 +71,7 @@ class GeoUtilsTest {
         when(mockClient.newCall(any(Request.class))).thenReturn(mockCall);
 
         // Test the method
-        GeoUtils.BASE_URL = "https://mockurl"; // Ensure no real API calls
+        GeoUtils.BASE_URL = "https://mockurl"; 
         Coordonnes coordonnes = geoUtils.GPS2Coordonnes("Invalid Address");
 
         // Assert the results
@@ -79,25 +79,28 @@ class GeoUtilsTest {
     }
 
 /*     @Test
-    void testGPS2Coordonnes_apiError() throws IOException {
-        // Mock a failed response
+    void testGPS2Coordonnes_httpErrorThrowsException() throws IOException {
+        // Mock une réponse échouée
         Response mockResponse = new Response.Builder()
                 .request(new Request.Builder().url("https://mockurl").build())
                 .protocol(Protocol.HTTP_1_1)
-                .code(500)
+                .code() // Code d'erreur HTTP
                 .message("Internal Server Error")
                 .body(ResponseBody.create("", MediaType.parse("application/json")))
                 .build();
-
-        // Mock the client behavior
-        Call mockCall = Mockito.mock(Call.class);
+    
+        // Mock du client HTTP
+        OkHttpClient mockClient = mock(OkHttpClient.class);
+        Call mockCall = mock(Call.class);
         when(mockCall.execute()).thenReturn(mockResponse);
         when(mockClient.newCall(any(Request.class))).thenReturn(mockCall);
-
-        // Test the method
-        GeoUtils.BASE_URL = "https://mockurl"; // Ensure no real API calls
-        Coordonnes coordonnes = GeoUtils.GPS2Coordonnes("Paris");
-
-        assertNull(coordonnes);
+    
+        // Injectez le client mocké
+        GeoUtils.BASE_URL = "https://mockurl";
+    
+        // Vérifie que l'exception est levée
+        Exception exception = assertThrows(IOException.class, () -> GeoUtils.GPS2Coordonnes("Paris"));
+        assertTrue(exception.getMessage().contains("Unexpected response code"));
     } */
+    
 }
