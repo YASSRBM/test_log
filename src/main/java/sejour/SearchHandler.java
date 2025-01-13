@@ -3,8 +3,7 @@ import sejour.elements.*;
 
 import java.nio.file.Path;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class SearchHandler {
@@ -56,14 +55,18 @@ public class SearchHandler {
                             );
                             logger.info("Distance between hotel and activity: " + distance);
                             if (distance <= critereActivite.getDistanceMax()) {
+                                logger.info("----------------------------Close Activity added");
                                 activitesProches.add(activite);
                             }
                         }
                         logger.info("Number of nearby activities: " + activitesProches.size());
+
+                        double prixAdd = hotel.getPrix() * critereForfait.getDureeSejour() +
+                                trajetAller.getPrix() + trajetRetour.getPrix();
+                        activitesProches = maximiserActivite(activitesProches, critereForfait.getPrixMax() - prixAdd);
+                        logger.info("Number of nearby activities within budget: " + activitesProches.size());
     
-                        double prixTotal = hotel.getPrix() * critereForfait.getDureeSejour() +
-                                trajetAller.getPrix() + trajetRetour.getPrix() +
-                                activitesProches.stream().mapToDouble(Activite::getPrix).sum();
+                        double prixTotal = prixAdd + activitesProches.stream().mapToDouble(Activite::getPrix).sum();
                         logger.info("Total price of the forfait: " + prixTotal);
     
                         if (prixTotal <= critereForfait.getPrixMax()) {
@@ -152,5 +155,20 @@ public class SearchHandler {
         }
         logger.info("Selected activities: " + selectedActivite.size());
         return  selectedActivite;
+    }
+
+    private List<Activite> maximiserActivite(List<Activite> activites, double budget){
+        activites.sort(Comparator.comparingDouble(Activite::getPrix));
+        List<Activite> maximise = new ArrayList<>();
+        double budgetAct = 0;
+        for(Activite act : activites){
+            if(budgetAct + act.getPrix() <= budget){
+                maximise.add(act);
+                budgetAct += act.getPrix();
+            }else {
+                break;
+            }
+        }
+        return maximise;
     }
 }

@@ -16,7 +16,7 @@ public class GeoUtils {
     public static final double EARTH_RADIUS = 6371;
     public static String BASE_URL = "https://geocode.maps.co/search?q="; 
 
-    public static Coordonnes GPS2Coordonnes(String adresse) {
+    public Coordonnes GPS2Coordonnes(String adresse) {
         OkHttpClient client = new OkHttpClient();
         String apiKey = "677fd8e19d2ed057306843cjxc9324a";
     
@@ -58,7 +58,7 @@ public class GeoUtils {
     
     }
 
-    static public double distanceEntre(Coordonnes pt1, Coordonnes pt2) {
+    public double distanceEntre(Coordonnes pt1, Coordonnes pt2) {
         if (pt1 == null || pt2 == null) {
             throw new NullPointerException("One of the coordinates is null");
         }
