@@ -44,7 +44,7 @@ public class SearchHandler {
                     if (trajetAller.getVilleArrivee().equals(hotel.getVille()) &&
                             trajetRetour.getVilleDepart().equals(hotel.getVille()) &&
                             trajetAller.getVilleDepart().equals(critereForfait.getVilleDepart()) &&
-                            trajetRetour.getVilleArrivee().equals(critereForfait.getVilleDepart())) {
+                            trajetRetour.getVilleArrivee().equals(critereForfait.getVilleRetour())) {
                         logger.info("Matching trajets found for hotel: " + hotel.getAdresse());
     
                         List<Activite> activitesProches = new ArrayList<>();

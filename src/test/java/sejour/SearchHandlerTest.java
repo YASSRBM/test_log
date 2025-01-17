@@ -12,7 +12,8 @@
  import java.util.List;
 
  import static org.junit.jupiter.api.Assertions.*;
- import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 
  public class SearchHandlerTest {
@@ -59,7 +60,7 @@
          CritereHotel critereHotel = new CritereHotel(4, CritereHotel.PrioriteHotel.CLASSEMENT);
          CritereTrajet critereTrajet = new CritereTrajet(Trajet.ModeTrajet.TRAIN, CritereTrajet.PrioriteTrajet.PRIX);
          CritereActivite critereActivite = new CritereActivite(Activite.Categorie.SPORT, 500);
-         CritereForfait critereForfait = new CritereForfait("Paris", 3, 400);
+         CritereForfait critereForfait = new CritereForfait("Paris", "Paris", 3, 400);
 
          // Instance réelle de la classe à tester
          SearchHandler searchService = new SearchHandler(dataHandler, geoUtils);
@@ -125,7 +126,7 @@
          CritereHotel critereHotel = new CritereHotel(4, CritereHotel.PrioriteHotel.CLASSEMENT);
          CritereTrajet critereTrajet = new CritereTrajet(Trajet.ModeTrajet.TRAIN, CritereTrajet.PrioriteTrajet.PRIX);
          CritereActivite critereActivite = new CritereActivite(Activite.Categorie.SPORT, 500.00);
-         CritereForfait critereForfait = new CritereForfait("Paris", 2, 400);
+         CritereForfait critereForfait = new CritereForfait("Paris", "Paris", 2, 400);
 
          // Instance réelle de la classe à tester
          SearchHandler searchService = new SearchHandler(dataHandler, geoUtils);
@@ -192,7 +193,7 @@
          CritereHotel critereHotel = new CritereHotel(4, CritereHotel.PrioriteHotel.CLASSEMENT);
          CritereTrajet critereTrajet = new CritereTrajet(Trajet.ModeTrajet.TRAIN, CritereTrajet.PrioriteTrajet.PRIX);
          CritereActivite critereActivite = new CritereActivite(Activite.Categorie.CULTURELLE, 500.00);
-         CritereForfait critereForfait = new CritereForfait("Paris", 2, 400);
+         CritereForfait critereForfait = new CritereForfait("Paris", "Paris", 2, 400);
 
          // Instance réelle de la classe à tester
          SearchHandler searchService = new SearchHandler(dataHandler, geoUtils);

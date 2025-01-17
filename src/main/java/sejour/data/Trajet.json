@@ -32,14 +32,6 @@
         "prix": 180.0
     },
     {
-        "villeDepart": "Paris",
-        "villeArrivee": "Rome",
-        "tempsDepart": "2025-02-03T06:30:00Z",
-        "tempsArrivee": "2025-02-03T09:00:00Z",
-        "modeTransport": "avion",
-        "prix": 220.0
-    },
-    {
         "villeDepart": "London",
         "villeArrivee": "Amsterdam",
         "tempsDepart": "2025-02-04T07:00:00Z",
@@ -86,30 +78,6 @@
         "tempsArrivee": "2025-02-07T11:30:00Z",
         "modeTransport": "avion",
         "prix": 150.0
-    },
-    {
-        "villeDepart": "Bordeaux",
-        "villeArrivee": "Nice",
-        "tempsDepart": "2025-02-08T09:00:00Z",
-        "tempsArrivee": "2025-02-08T10:45:00Z",
-        "modeTransport": "avion",
-        "prix": 170.0
-    },
-    {
-        "villeDepart": "Nice",
-        "villeArrivee": "Paris",
-        "tempsDepart": "2025-02-09T07:00:00Z",
-        "tempsArrivee": "2025-02-09T08:30:00Z",
-        "modeTransport": "avion",
-        "prix": 140.0
-    },
-    {
-        "villeDepart": "Nice",
-        "villeArrivee": "Paris",
-        "tempsDepart": "2025-02-09T15:00:00Z",
-        "tempsArrivee": "2025-02-09T21:00:00Z",
-        "modeTransport": "train",
-        "prix": 110.0
     },
     {
         "villeDepart": "Amsterdam",

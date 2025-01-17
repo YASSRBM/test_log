@@ -117,15 +117,12 @@ public class SejourUI extends JFrame {
                 ((Integer) distanceMax.getValue()).doubleValue()
         );
         
-            // LocalDate localDate = (LocalDate) dateSejour.getModel().getValue();
-            // // Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            // Date date = (Date) dateSejour.getModel().getValue();
-        
             CritereForfait critereForfait = new CritereForfait(
-                    villeDepart.getText(),
-                    (Integer) dureeSejour.getValue(),
-                    (Integer) prixMax.getValue()
-            );
+                villeDepart.getText(),
+                villeRetour.getText(),
+                (Integer) dureeSejour.getValue(),
+                (Integer) prixMax.getValue()
+        );
         
             List<Forfait> forfaits = searchHandler.Search(critereHotel, critereTrajet, critereActivite, critereForfait);
         
