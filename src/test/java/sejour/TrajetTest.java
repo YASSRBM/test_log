@@ -51,4 +51,15 @@ public class TrajetTest {
         // Assert
         assertTrue(trajet.getTempsArrivee().isBefore(trajet.getTempsDepart()), "La date d'arrivée ne doit pas être antérieure à la date de départ !");
     }
+
+    @Test
+    void testFromStringValidInputs() {
+        Trajet trajet = new Trajet();
+        // Vérifier les cas normaux
+        assertEquals(Trajet.ModeTrajet.AVION, trajet.fromString("AVION"), "AVION doit retourner ModeTrajet.AVION");
+        assertEquals(Trajet.ModeTrajet.TRAIN, trajet.fromString("TRAIN"), "TRAIN doit retourner ModeTrajet.TRAIN");
+        assertEquals(Trajet.ModeTrajet.VOITURE, trajet.fromString("VOITURE"), "VOITURE doit retourner ModeTrajet.VOITURE");
+        assertEquals(Trajet.ModeTrajet.BUS, trajet.fromString("BUS"), "BUS doit retourner ModeTrajet.BUS");
+        assertThrows(IllegalArgumentException.class, ()->trajet.fromString("null"));
+    }
 }

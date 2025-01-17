@@ -104,6 +104,9 @@ public class SearchHandler {
             selectedForfaits.sort((f1, f2) -> {
                 Instant tempsAller1 = f1.getTransportAlle().getTempsArrivee();
                 Instant tempsAller2 = f2.getTransportAlle().getTempsArrivee();
+                if(tempsAller1.equals(tempsAller2)){
+                    return Double.compare(f1.getTransportAlle().getPrix(), f2.getTransportAlle().getPrix());
+                }
                 return tempsAller1.compareTo(tempsAller2);
             });
             // logger.info("Sorted forfaits based on trajet time");
@@ -111,6 +114,31 @@ public class SearchHandler {
             selectedForfaits.sort((f1, f2) -> {
                 double prixAller1 = f1.getTransportAlle().getPrix();
                 double prixAller2 = f2.getTransportAlle().getPrix();
+                if(prixAller1 == prixAller2){
+                    return f1.getTransportAlle().getTempsArrivee().compareTo(f2.getTransportAlle().getTempsArrivee());
+                }
+                return Double.compare(prixAller1, prixAller2);
+            });
+            // logger.info("Sorted forfaits based on trajet price");
+        }
+
+        if (critereTrajet.getPrioriteTrajet() == CritereTrajet.PrioriteTrajet.TEMPS) {
+            selectedForfaits.sort((f1, f2) -> {
+                Instant tempsAller1 = f1.getTransportRetour().getTempsArrivee();
+                Instant tempsAller2 = f2.getTransportRetour().getTempsArrivee();
+                if(tempsAller1.equals(tempsAller2)){
+                    return Double.compare(f1.getTransportRetour().getPrix(), f2.getTransportRetour().getPrix());
+                }
+                return tempsAller1.compareTo(tempsAller2);
+            });
+            // logger.info("Sorted forfaits based on trajet time");
+        } else {
+            selectedForfaits.sort((f1, f2) -> {
+                double prixAller1 = f1.getTransportRetour().getPrix();
+                double prixAller2 = f2.getTransportRetour().getPrix();
+                if(prixAller1 == prixAller2){
+                    return f1.getTransportRetour().getTempsArrivee().compareTo(f2.getTransportRetour().getTempsArrivee());
+                }
                 return Double.compare(prixAller1, prixAller2);
             });
             // logger.info("Sorted forfaits based on trajet price");

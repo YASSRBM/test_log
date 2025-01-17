@@ -7,6 +7,7 @@
  import sejour.elements.*;
 
  import java.text.SimpleDateFormat;
+ import java.time.Instant;
  import java.util.Arrays;
  import java.util.List;
 
@@ -157,5 +158,67 @@
          verify(dataHandler, times(1)).getTrajets();
          verify(dataHandler, times(1)).getActivites();
      }
+
+     @Test
+     void testSearchEgalitesOptions() throws Exception {
+
+         // Préparer un parseur de dates
+         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+         // Données fictives
+         Hotel hotel = new Hotel("Hotel A", "Lyon", 4, 100.00); // Prix : 100€/nuit
+         Trajet trajetAller1 = new Trajet("Paris", "Lyon", Instant.parse("2025-01-10T08:00:00Z"), Instant.parse("2025-01-10T12:00:00Z"), Trajet.ModeTrajet.TRAIN, 50.00); // Prix : 50€, Durée : 4h
+         Trajet trajetAller2 = new Trajet("Paris", "Lyon", Instant.parse("2025-01-10T08:00:00Z"), Instant.parse("2025-01-10T11:30:00Z"), Trajet.ModeTrajet.TRAIN, 50.00); // Prix : 50€, Durée : 3h30
+         Trajet trajetRetour1 = new Trajet("Lyon", "Paris",  Instant.parse("2025-01-12T08:00:00Z"), Instant.parse("2025-01-12T12:00:00Z"), Trajet.ModeTrajet.TRAIN, 50.00); // Prix : 50€
+         Trajet trajetRetour2 = new Trajet("Lyon", "Paris",  Instant.parse("2025-01-12T08:00:00Z"), Instant.parse("2025-01-12T12:00:00Z"), Trajet.ModeTrajet.TRAIN, 60.00); // Prix : 50€
+
+         // Activités fictives
+         Activite activite1 = new Activite("123 Rue de Paris", sdf.parse("2025-01-11"), Activite.Categorie.SPORT, 20.00); // Prix : 20€
+         Activite activite2 = new Activite("456 Avenue de Lyon", sdf.parse("2025-01-12"), Activite.Categorie.SPORT, 30.00); // Prix : 30€
+
+         // Configurer le DataHandler
+         when(dataHandler.getHotels()).thenReturn(List.of(hotel));
+         when(dataHandler.getTrajets()).thenReturn(List.of(trajetAller1, trajetAller2, trajetRetour1, trajetRetour2));
+         when(dataHandler.getActivites()).thenReturn(List.of(activite1, activite2));
+
+         when(geoUtils.GPS2Coordonnes(hotel.getAdresse()))
+                 .thenReturn(new Coordonnes(45.764, 4.8357)); // Lyon
+         when(geoUtils.GPS2Coordonnes(anyString()))
+                 .thenReturn(new Coordonnes(48.8566, 2.3522)); // Paris par défaut
+         when(geoUtils.distanceEntre(Mockito.any(Coordonnes.class), Mockito.any(Coordonnes.class)))
+                 .thenReturn(300.0); // Distance fictive, toujours dans la limite
+
+         // Critères de recherche
+         CritereHotel critereHotel = new CritereHotel(4, CritereHotel.PrioriteHotel.CLASSEMENT);
+         CritereTrajet critereTrajet = new CritereTrajet(Trajet.ModeTrajet.TRAIN, CritereTrajet.PrioriteTrajet.PRIX);
+         CritereActivite critereActivite = new CritereActivite(Activite.Categorie.CULTURELLE, 500.00);
+         CritereForfait critereForfait = new CritereForfait("Paris", 2, 400);
+
+         // Instance réelle de la classe à tester
+         SearchHandler searchService = new SearchHandler(dataHandler, geoUtils);
+
+         // Appeler la méthode Search
+         List<Forfait> result = searchService.Search(critereHotel, critereTrajet, critereActivite, critereForfait);
+
+         // Vérifications
+         assertNotNull(result, "La liste des forfaits ne doit pas être nulle");
+         assertFalse(result.isEmpty(), "La liste des forfaits ne doit pas être vide");
+
+         // Vérifier que le forfait utilise les trajets optimaux
+         Forfait selectedForfait = result.get(0); // Supposons qu'un seul forfait est généré
+         assertEquals(trajetAller2, selectedForfait.getTransportAlle(), "Le trajet aller sélectionné doit avoir la durée la plus courte en cas d'égalité sur le prix");
+         assertEquals(trajetRetour1, selectedForfait.getTransportRetour(), "Le trajet retour sélectionné doit avoir le prix le moins cher en cas d'égalité sur la durée");
+
+         // Vérifier que les activités sont incluses correctement
+         List<Activite> selectedActivities = selectedForfait.getActivites();
+         assertTrue(selectedActivities.contains(activite1), "L'activité 1 doit être incluse dans le forfait");
+         assertTrue(selectedActivities.contains(activite2), "L'activité 2 doit être incluse dans le forfait");
+
+         // Vérifier que getHotels, getTrajets, et getActivites ont été appelés
+         verify(dataHandler, times(1)).getHotels();
+         verify(dataHandler, times(1)).getTrajets();
+         verify(dataHandler, times(1)).getActivites();
+     }
+
 
  }
