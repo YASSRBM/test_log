@@ -80,10 +80,6 @@ public class DataHandler {
                 hotels.add(hotel);
             }
     
-    
-            // for (Hotel hotel : hotels) {
-                // System.out.println("Hotel: " + hotel.getAdresse() + ", Ville: " + hotel.getVille() + ", Classement: " + hotel.getClassement() + ", Prix: " + hotel.getPrix());
-            // }
         } catch (IOException e) {
             e.printStackTrace();
         }
