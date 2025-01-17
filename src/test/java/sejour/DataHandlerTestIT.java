@@ -26,13 +26,13 @@ public class DataHandlerTestIT {
 
         assertNotNull(activites);
         Activite activite1 = activites.get(0);
-        assertEquals("Louvre", activite1.getAdresse());
-        assertEquals(Activite.Categorie.MUSIQUE, activite1.getCategorie());
-        assertEquals(25.0, activite1.getPrix());
+        assertEquals("Avenue de Paris", activite1.getAdresse());
+        assertEquals(Activite.Categorie.TOURISTIQUE, activite1.getCategorie());
+        assertEquals(40.0, activite1.getPrix());
 
         Activite activite2 = activites.get(1);
-        assertEquals("Tour Eiffel", activite2.getAdresse());
-        assertEquals(Activite.Categorie.TOURISTIQUE, activite2.getCategorie());
+        assertEquals("Great Russell Street", activite2.getAdresse());
+        assertEquals(Activite.Categorie.CULTURELLE, activite2.getCategorie());
         assertEquals(20.0, activite2.getPrix());
     }
 
@@ -62,9 +62,9 @@ public class DataHandlerTestIT {
 
 
         Hotel hotel2 = hotels.get(1);
-        assertEquals("55 Avenue des Champs-Élysées", hotel2.getAdresse());
-        assertEquals(hotel2.getClassement(), 4);
-        assertEquals(180.0, hotel2.getPrix());
+        assertEquals("15 Buckingham Palace Road", hotel2.getAdresse());
+        assertEquals(hotel2.getClassement(), 5);
+        assertEquals(120.0, hotel2.getPrix());
 
     }   
 

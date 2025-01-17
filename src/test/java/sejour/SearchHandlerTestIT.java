@@ -21,10 +21,10 @@ public class SearchHandlerTestIT {
         SearchHandler searchHandler = new SearchHandler(dataHandler, new GeoUtils());
 
         // Critères de recherche
-        CritereHotel critereHotel = new CritereHotel(1, CritereHotel.PrioriteHotel.CLASSEMENT);
+        CritereHotel critereHotel = new CritereHotel(3, CritereHotel.PrioriteHotel.CLASSEMENT);
         CritereTrajet critereTrajet = new CritereTrajet(Trajet.ModeTrajet.AVION, CritereTrajet.PrioriteTrajet.PRIX);
-        CritereActivite critereActivite = new CritereActivite(Activite.Categorie.MUSIQUE, 500.00);
-        CritereForfait critereForfait = new CritereForfait("Paris", "Paris", 3, 1000);
+        CritereActivite critereActivite = new CritereActivite(Activite.Categorie.TOURISTIQUE, 500.00);
+        CritereForfait critereForfait = new CritereForfait("Paris", "London", 3, 1000);
 
         // Appeler la méthode Search
         List<Forfait> result = searchHandler.Search(critereHotel, critereTrajet, critereActivite, critereForfait);
@@ -50,10 +50,10 @@ public class SearchHandlerTestIT {
         SearchHandler searchHandler = new SearchHandler(dataHandler, geoUtils);
 
         // Critères de recherche
-        CritereHotel critereHotel = new CritereHotel(1, CritereHotel.PrioriteHotel.CLASSEMENT);
+        CritereHotel critereHotel = new CritereHotel(3, CritereHotel.PrioriteHotel.CLASSEMENT);
         CritereTrajet critereTrajet = new CritereTrajet(Trajet.ModeTrajet.AVION, CritereTrajet.PrioriteTrajet.PRIX);
-        CritereActivite critereActivite = new CritereActivite(Activite.Categorie.MUSIQUE, 500.00);
-        CritereForfait critereForfait = new CritereForfait("Paris", "Paris", 3, 1000);
+        CritereActivite critereActivite = new CritereActivite(Activite.Categorie.TOURISTIQUE, 500.00);
+        CritereForfait critereForfait = new CritereForfait("Paris", "London", 3, 1000);
 
         // Appeler la méthode Search
         List<Forfait> result = searchHandler.Search(critereHotel, critereTrajet, critereActivite, critereForfait);

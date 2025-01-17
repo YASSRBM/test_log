@@ -1,100 +1,44 @@
 [
     {
-        "adresse": "Louvre",
-        "date": "2025-03-15",
-        "categorie": "MUSIQUE",
-        "prix": 25.0,
-        "ville": "Paris"
-    },
-    {
-        "adresse": "Tour Eiffel",
-        "date": "2025-03-16",
-        "categorie": "TOURISTIQUE",
-        "prix": 20.0,
-        "ville": "Paris"
-    },
-    {
-        "adresse": "Quai de la Tournelle",
-        "date": "2025-03-17",
-        "categorie": "TOURISTIQUE",
-        "prix": 30.0,
-        "ville": "Paris"
-    },
-    {
-        "adresse": "Place du Tertre",
-        "date": "2025-03-18",
-        "categorie": "TOURISTIQUE",
-        "prix": 10.0,
-        "ville": "Paris"
-    },
-    {
-        "adresse": "Avenue des Champs-Elysees",
-        "date": "2025-03-19",
-        "categorie": "SHOPPING",
-        "prix": 0.0,
-        "ville": "Paris"
-    },
-    {
-        "adresse": "Avenue de Paris",  
+        "adresse": "Avenue de Paris",
         "date": "2025-03-20",
         "categorie": "TOURISTIQUE",
         "prix": 40.0,
-        "ville": "Versailles"  
+        "ville": "Versailles"
     },
     {
-        "adresse": "Great Russell Street",  
+        "adresse": "Great Russell Street",
         "date": "2025-04-01",
         "categorie": "CULTURELLE",
-        "prix": 0.0,
+        "prix": 20.0,
         "ville": "London"
     },
     {
-        "adresse": "Tower Bridge Road",  
-        "date": "2025-04-02",
-        "categorie": "TOURISTIQUE",
-        "prix": 30.0,
-        "ville": "London"
-    },
-    {
-        "adresse": "Park Lane",  
+        "adresse": "Park Lane",
         "date": "2025-04-03",
         "categorie": "SPORT",
         "prix": 0.0,
         "ville": "London"
     },
     {
-        "adresse": "Westminster Bridge Road",  
+        "adresse": "Westminster Bridge Road",
         "date": "2025-04-04",
         "categorie": "TOURISTIQUE",
         "prix": 27.0,
         "ville": "London"
     },
     {
-        "adresse": "Chalk Farm Road",  
+        "adresse": "Chalk Farm Road",
         "date": "2025-04-05",
         "categorie": "SHOPPING",
         "prix": 0.0,
         "ville": "London"
     },
     {
-        "adresse": "Covent Garden",  
+        "adresse": "Covent Garden",
         "date": "2025-04-06",
         "categorie": "MUSIQUE",
         "prix": 45.0,
         "ville": "London"
-    },
-    {
-        "adresse": "Brandenburger Tor",  
-        "date": "2025-05-10",
-        "categorie": "CULTURELLE",
-        "prix": 0.0,
-        "ville": "Berlin"
-    },
-    {
-        "adresse": "Panoramastrasse",  
-        "date": "2025-05-11",
-        "categorie": "TOURISTIQUE",
-        "prix": 20.0,
-        "ville": "Berlin"
     }
 ]

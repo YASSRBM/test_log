@@ -9,67 +9,6 @@
         "adresse": "15 Buckingham Palace Road",
         "ville": "London",
         "classement": 5,
-        "prix": 280.0
-    },
-    {
-        "adresse": "45 Oxford Street",
-        "ville": "London",
-        "classement": 4,
-        "prix": 220.0
-    },
-    {
-        "adresse": "18 Baker Street",
-        "ville": "London",
-        "classement": 3,
-        "prix": 160.0
-    },
-    {
-        "adresse": "10 Downing Street",
-        "ville": "London",
-        "classement": 2,
-        "prix": 100.0
-    },
-    {
-        "adresse": "Place des Quinconces 3",
-        "ville": "Bordeaux",
-        "classement": 5,
-        "prix": 220.0
-    },
-    {
-        "adresse": "Rue de France 9",
-        "ville": "Nice",
-        "classement": 1,
-        "prix": 85.0
-    },
-    {
-        "adresse": "Alexanderplatz 7",
-        "ville": "Berlin",
-        "classement": 5,
-        "prix": 230.0
-    },
-    {
-        "adresse": "Kurfürstendamm 15",
-        "ville": "Berlin",
-        "classement": 3,
-        "prix": 140.0
-    },
-    {
-        "adresse": "Potsdamer Platz 5",
-        "ville": "Berlin",
-        "classement": 1,
-        "prix": 60.0
-    },
-
-    {
-        "adresse": "55 Avenue des Champs-Élysées",
-        "ville": "Paris",
-        "classement": 4,
-        "prix": 180.0
-    },
-    {
-        "adresse": "1 Rue de la Paix",
-        "ville": "Paris",
-        "classement": 5,
-        "prix": 300.0
+        "prix": 120.0
     }
 ]

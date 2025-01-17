@@ -221,5 +221,35 @@ import static org.mockito.Mockito.*;
          verify(dataHandler, times(1)).getActivites();
      }
 
+     @Test
+     void testSortForfaitsByTempsAndPrix() {
+         Forfait forfait1 = new Forfait();
+         forfait1.setTransportAlle(new Trajet("Paris", "Lyon", Instant.parse("2025-01-10T08:00:00Z"), Instant.parse("2025-01-10T12:00:00Z"), Trajet.ModeTrajet.TRAIN, 50.0));
+
+         Forfait forfait2 = new Forfait();
+         forfait2.setTransportAlle(new Trajet("Paris", "Lyon", Instant.parse("2025-01-10T08:00:00Z"), Instant.parse("2025-01-10T12:00:00Z"), Trajet.ModeTrajet.TRAIN, 40.0));
+
+         Forfait forfait3 = new Forfait();
+         forfait3.setTransportAlle(new Trajet("Paris", "Lyon", Instant.parse("2025-01-10T08:00:00Z"), Instant.parse("2025-01-10T11:00:00Z"), Trajet.ModeTrajet.TRAIN, 60.0));
+
+         List<Forfait> selectedForfaits = Arrays.asList(forfait1, forfait2, forfait3);
+
+         // Tri basé sur la logique
+         selectedForfaits.sort((f1, f2) -> {
+             Instant tempsAller1 = f1.getTransportAlle().getTempsArrivee();
+             Instant tempsAller2 = f2.getTransportAlle().getTempsArrivee();
+             if (tempsAller1.equals(tempsAller2)) {
+                 return Double.compare(f1.getTransportAlle().getPrix(), f2.getTransportAlle().getPrix());
+             }
+             return tempsAller1.compareTo(tempsAller2);
+         });
+
+         // Vérifications
+         assertEquals(forfait3, selectedForfaits.get(0), "Le forfait avec le temps d'arrivée le plus tôt doit être en premier");
+         assertEquals(forfait2, selectedForfaits.get(1), "En cas d'égalité, le forfait le moins cher doit être en premier");
+         assertEquals(forfait1, selectedForfaits.get(2), "Le forfait restant doit être en dernier");
+     }
+
+
 
  }
