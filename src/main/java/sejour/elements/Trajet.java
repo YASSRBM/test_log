@@ -86,7 +86,12 @@ public class Trajet {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Départ: " + villeDepart + " -> Arrivée: " + villeArrivee +
+                ", Date départ: " + tempsDepart + ", Date arrivée: " + tempsArrivee +
+                ", Mode: " + modeTransport + ", Prix: " + prix;
+    }
     
 
 }

@@ -11,6 +11,7 @@ import org.jdatepicker.impl.UtilDateModel;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -100,6 +101,7 @@ public class SejourUI extends JFrame {
         }
         
         private void searchForfaits() {
+            
             CritereHotel critereHotel = new CritereHotel(
                     (Integer) classementMin.getValue(),
                     CritereHotel.PrioriteHotel.valueOf(prioriteHotel.getSelectedItem().toString())
@@ -130,8 +132,32 @@ public class SejourUI extends JFrame {
         
             // Display the search results in a new window or dialog
             JOptionPane.showMessageDialog(this, "Nombre de forfaits trouvés : " + forfaits.size());
+            showSearchResults(forfaits);
         }
-        
+        private void showSearchResults(List<Forfait> forfaits) {
+            StringBuilder message = new StringBuilder();
+            message.append("Nombre de forfaits trouvés : ").append(forfaits.size()).append("\n\n");
+
+            for (int i = 0; i < forfaits.size(); i++) {
+                Forfait forfait = forfaits.get(i);
+                message.append("Forfait ").append(i + 1).append(":\n");
+                message.append("Hôtel: ").append(forfait.getHotel().getAdresse()).append("\n");
+                message.append("Transport aller: ").append(forfait.getTransportAlle().toString()).append("\n");
+                message.append("Transport retour: ").append(forfait.getTransportRetour().toString()).append("\n");
+                message.append("Activités:\n");
+                message.append(forfait.getActivites().stream()
+                        .map(activite -> "- " + activite.getAdresse())
+                        .collect(Collectors.joining("\n")));
+                message.append("\n\n");
+            }
+
+            JTextArea textArea = new JTextArea(message.toString());
+            textArea.setEditable(false);
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new Dimension(400, 300));
+
+            JOptionPane.showMessageDialog(this, scrollPane, "Résultats de recherche", JOptionPane.PLAIN_MESSAGE);
+        }
         public static void main(String[] args) {
                     // Configure the logger
         Logger logger = Logger.getLogger("");
