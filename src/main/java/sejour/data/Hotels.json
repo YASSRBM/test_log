@@ -151,12 +151,6 @@
     },
 
     {
-        "adresse": "10 Rue de Rivoli",
-        "ville": "Paris",
-        "classement": 5,
-        "prix": 250.0
-    },
-    {
         "adresse": "55 Avenue des Champs-Élysées",
         "ville": "Paris",
         "classement": 4,

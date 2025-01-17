@@ -21,7 +21,7 @@ public class SearchHandler {
 
     }
 
-    private DataHandler dataHandler = new DataHandler(Path.of("data"));
+    public DataHandler dataHandler = new DataHandler(null);
     private GeoUtils geoUtils = new GeoUtils();
 
     public List<Forfait> Search(CritereHotel critereHotel, CritereTrajet critereTrajet, CritereActivite critereActivite, CritereForfait critereForfait) {
@@ -49,6 +49,7 @@ public class SearchHandler {
     
                         List<Activite> activitesProches = new ArrayList<>();
                         for (Activite activite : selectedActivites) {
+                            System.out.println(" asdasdasdasd!"+ hotel.getAdresse() + "    "+activite.getAdresse());
                             double distance = geoUtils.distanceEntre(
                                     geoUtils.GPS2Coordonnes(hotel.getAdresse()),
                                     geoUtils.GPS2Coordonnes(activite.getAdresse())

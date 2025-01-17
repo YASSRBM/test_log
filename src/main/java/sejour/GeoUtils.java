@@ -59,6 +59,8 @@ public class GeoUtils {
     }
 
     public double distanceEntre(Coordonnes pt1, Coordonnes pt2) {
+        System.out.println(pt1);
+        System.out.println(pt2);
         if (pt1 == null || pt2 == null) {
             throw new NullPointerException("One of the coordinates is null");
         }

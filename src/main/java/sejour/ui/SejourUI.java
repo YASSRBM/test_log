@@ -37,6 +37,7 @@ public class SejourUI extends JFrame {
 
     public SejourUI(SearchHandler searchHandler) {
         this.searchHandler = searchHandler;
+        this.searchHandler.dataHandler.initData();
         initComponents();
     }
 

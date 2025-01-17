@@ -34,7 +34,7 @@ public class DataHandler {
     public DataHandler(){
     }
 
-    private void initData() {
+    public void initData() {
         initHotels();
         initActivites();
         initTrajets();
@@ -59,6 +59,7 @@ public class DataHandler {
             if(folderPath==null) 
             hotelsFilePath = Paths.get("src/main/java/sejour/data/Hotels.json");
             else {
+                System.out.println(folderPath);
                 hotelsFilePath=Paths.get(folderPath.toString()+"/Hotels.json");
             }
         

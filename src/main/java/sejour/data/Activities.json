@@ -1,13 +1,13 @@
 [
     {
-        "adresse": "Louvre Museum Rue de Rivoli",
+        "adresse": "Louvre Museum",
         "date": "2025-03-15",
-        "categorie": "CULTURELLE",
+        "categorie": "MUSIQUE",
         "prix": 25.0,
         "ville": "Paris"
     },
     {
-        "adresse": "Eiffel Tower Champ de Mars",
+        "adresse": "Eiffel Tower ",
         "date": "2025-03-16",
         "categorie": "TOURISTIQUE",
         "prix": 20.0,
