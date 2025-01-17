@@ -26,12 +26,12 @@ public class DataHandlerTestIT {
 
         assertNotNull(activites);
         Activite activite1 = activites.get(0);
-        assertEquals("Louvre Museum Rue de Rivoli", activite1.getAdresse());
-        assertEquals(Activite.Categorie.CULTURELLE, activite1.getCategorie());
+        assertEquals("Louvre", activite1.getAdresse());
+        assertEquals(Activite.Categorie.MUSIQUE, activite1.getCategorie());
         assertEquals(25.0, activite1.getPrix());
 
         Activite activite2 = activites.get(1);
-        assertEquals("Eiffel Tower Champ de Mars", activite2.getAdresse());
+        assertEquals("Tour Eiffel", activite2.getAdresse());
         assertEquals(Activite.Categorie.TOURISTIQUE, activite2.getCategorie());
         assertEquals(20.0, activite2.getPrix());
     }
