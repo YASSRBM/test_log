@@ -25,13 +25,9 @@ public class SearchHandler {
     private GeoUtils geoUtils = new GeoUtils();
 
     public List<Forfait> Search(CritereHotel critereHotel, CritereTrajet critereTrajet, CritereActivite critereActivite, CritereForfait critereForfait) {
-        // logger.info("Starting search for forfaits...");
         List<Hotel> selectedHotels = SearchHotel(critereHotel);
-        // logger.info("Selected hotels: " + selectedHotels.size());
         List<Trajet> selectedTrajets = SearchTrajet(critereTrajet);
-        // logger.info("Selected trajets: " + selectedTrajets.size());
         List<Activite> selectedActivites = SearchActivite(critereActivite);
-        // logger.info("Selected activities: " + selectedActivites.size());
     
         List<Forfait> selectedForfaits = new ArrayList<>();
     
@@ -92,10 +88,8 @@ public class SearchHandler {
             // Sort hotels based on priority
             if (critereHotel.getPrioriteHotel() == CritereHotel.PrioriteHotel.CLASSEMENT) {
                 selectedForfaits.sort((f1, f2) -> Integer.compare(f2.getHotel().getClassement(), f1.getHotel().getClassement()));
-                // logger.info("Sorted forfaits based on hotel classement");
             } else {
                 selectedForfaits.sort((f1, f2) -> Double.compare(f1.getHotel().getPrix(), f2.getHotel().getPrix()));
-                // logger.info("Sorted forfaits based on hotel price");
             }
         }
     
@@ -110,7 +104,6 @@ public class SearchHandler {
                     }
                     return tempsAller1.compareTo(tempsAller2);
                 });
-                // logger.info("Sorted forfaits based on trajet time");
             } else {
                 selectedForfaits.sort((f1, f2) -> {
                     double prixAller1 = f1.getTransportAlle().getPrix();
@@ -120,7 +113,6 @@ public class SearchHandler {
                     }
                     return Double.compare(prixAller1, prixAller2);
                 });
-                // logger.info("Sorted forfaits based on trajet price");
             }
         }
 
@@ -134,7 +126,6 @@ public class SearchHandler {
                     }
                     return tempsAller1.compareTo(tempsAller2);
                 });
-                // logger.info("Sorted forfaits based on trajet time");
             } else {
                 selectedForfaits.sort((f1, f2) -> {
                     double prixAller1 = f1.getTransportRetour().getPrix();
@@ -144,7 +135,6 @@ public class SearchHandler {
                     }
                     return Double.compare(prixAller1, prixAller2);
                 });
-                // logger.info("Sorted forfaits based on trajet price");
             }
         }
     
