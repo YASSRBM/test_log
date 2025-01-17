@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Activite.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">test_log</a> &gt; <a href="index.source.html" class="el_package">sejour.elements</a> &gt; <span class="el_source">Activite.java</span></div><h1>Activite.java</h1><pre class="source lang-java linenums">package sejour.elements;
+
+import java.util.Date;
+
+
+
+public class Activite {
+
+<span class="fc" id="L9">    public Activite(String adresse, Date date, Categorie categorie, double prix) {</span>
+<span class="fc" id="L10">        this.adresse = adresse;</span>
+<span class="fc" id="L11">        this.date = date;</span>
+<span class="fc" id="L12">        this.categorie = categorie;</span>
+<span class="fc" id="L13">        this.prix = prix;</span>
+<span class="fc" id="L14">    }</span>
+<span class="fc" id="L15">    public Activite(){}</span>
+
+<span class="fc" id="L17">    public enum Categorie {SPORT, MUSIQUE, TOURISTIQUE, SHOPPING, CULTURELLE, HISTORIQUE}</span>
+
+    public String getAdresse() {
+<span class="fc" id="L20">        return adresse;</span>
+    }
+
+    public void setAdresse(String adresse) {
+<span class="fc" id="L24">        this.adresse = adresse;</span>
+<span class="fc" id="L25">    }</span>
+
+    public Date getDate() {
+<span class="fc" id="L28">        return date;</span>
+    }
+
+    public void setDate(Date date) {
+<span class="fc" id="L32">        this.date = date;</span>
+<span class="fc" id="L33">    }</span>
+
+    public Categorie getCategorie() {
+<span class="fc" id="L36">        return categorie;</span>
+    }
+
+    public void setCategorie(Categorie categorie) {
+<span class="fc" id="L40">        this.categorie = categorie;</span>
+<span class="fc" id="L41">    }</span>
+
+    public double getPrix() {
+<span class="fc" id="L44">        return prix;</span>
+    }
+
+    public void setPrix(double prix) {
+<span class="fc" id="L48">        this.prix = prix;</span>
+<span class="fc" id="L49">    }</span>
+
+    public Categorie fromString(String categorieStr) {
+<span class="pc bpc" id="L52" title="1 of 7 branches missed.">        switch (categorieStr.toUpperCase()) {</span>
+            case &quot;SPORT&quot;:
+<span class="fc" id="L54">                return Categorie.SPORT;</span>
+            case &quot;MUSIQUE&quot;:
+<span class="fc" id="L56">                return Categorie.MUSIQUE;</span>
+            case &quot;TOURISTIQUE&quot;:
+<span class="fc" id="L58">                return Categorie.TOURISTIQUE;</span>
+            case &quot;SHOPPING&quot;:
+<span class="fc" id="L60">                return Categorie.SHOPPING;</span>
+            case &quot;CULTURELLE&quot;:
+<span class="fc" id="L62">                return Categorie.CULTURELLE;</span>
+            case &quot;HISTORIQUE&quot;:
+<span class="fc" id="L64">                return Categorie.HISTORIQUE;</span>
+            default:
+<span class="nc" id="L66">                throw new IllegalArgumentException(&quot;Unknown category: &quot; + categorieStr);</span>
+        }
+    }
+    
+    private String adresse;
+    private Date date;
+    private Categorie categorie;
+    private double prix;
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

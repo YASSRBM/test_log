@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeoUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">test_log</a> &gt; <a href="index.source.html" class="el_package">sejour</a> &gt; <span class="el_source">GeoUtils.java</span></div><h1>GeoUtils.java</h1><pre class="source lang-java linenums">package sejour;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import sejour.elements.Coordonnes;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+<span class="fc" id="L15">public class GeoUtils {</span>
+    public static final double EARTH_RADIUS = 6371;
+<span class="fc" id="L17">    public static String BASE_URL = &quot;https://geocode.maps.co/search?q=&quot;; </span>
+
+    public Coordonnes GPS2Coordonnes(String adresse) {
+<span class="fc" id="L20">        OkHttpClient client = new OkHttpClient();</span>
+<span class="fc" id="L21">        String apiKey = &quot;677fd8e19d2ed057306843cjxc9324a&quot;;</span>
+    
+        // Remove any leading/trailing whitespace from the address
+<span class="fc" id="L24">        adresse = adresse.trim();</span>
+    
+        // Replace commas with spaces in the address
+<span class="fc" id="L27">        adresse = adresse.replace(&quot;,&quot;, &quot; &quot;);</span>
+    
+        // Encode the address to handle special characters
+<span class="fc" id="L30">        String encodedAdresse = URLEncoder.encode(adresse, StandardCharsets.UTF_8);</span>
+    
+        // Build the request URL with the encoded address and API key
+<span class="fc" id="L33">        String url = String.format(&quot;https://geocode.maps.co/search?q=%s&amp;api_key=%s&quot;, encodedAdresse, apiKey);</span>
+    
+<span class="fc" id="L35">        Request request = new Request.Builder()</span>
+<span class="fc" id="L36">                .url(url)</span>
+<span class="fc" id="L37">                .build();</span>
+    
+<span class="fc" id="L39">        try (Response response = client.newCall(request).execute()) {</span>
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">            if (!response.isSuccessful() ) {</span>
+<span class="nc" id="L41">                throw new IOException(&quot;Unexpected response &quot; + response);</span>
+            }
+    
+<span class="fc" id="L44">            String responseStr = response.body().string();</span>
+<span class="fc" id="L45">            JSONArray jsonArray = new JSONArray(responseStr);</span>
+    
+<span class="fc bfc" id="L47" title="All 2 branches covered.">            if (jsonArray.length() &gt; 0) {</span>
+<span class="fc" id="L48">                JSONObject jObject = jsonArray.getJSONObject(0);</span>
+<span class="fc" id="L49">                double latitude = jObject.getDouble(&quot;lat&quot;);</span>
+<span class="fc" id="L50">                double longitude = jObject.getDouble(&quot;lon&quot;);</span>
+<span class="fc" id="L51">                return new Coordonnes(latitude, longitude);</span>
+            } else {
+<span class="fc" id="L53">                throw new IOException(&quot;No coordinates found for the given address: &quot; + adresse);</span>
+            }
+<span class="fc" id="L55">        } catch (IOException e) {</span>
+<span class="fc" id="L56">            return null;</span>
+        }
+    
+    }
+
+    public double distanceEntre(Coordonnes pt1, Coordonnes pt2) {
+<span class="fc" id="L62">        System.out.println(pt1);</span>
+<span class="fc" id="L63">        System.out.println(pt2);</span>
+<span class="fc bfc" id="L64" title="All 4 branches covered.">        if (pt1 == null || pt2 == null) {</span>
+<span class="fc" id="L65">            throw new NullPointerException(&quot;One of the coordinates is null&quot;);</span>
+        }
+    
+        // Convert degrees to radians
+<span class="fc" id="L69">        double lat1Rad = Math.toRadians(pt1.getLatitude());</span>
+<span class="fc" id="L70">        double lon1Rad = Math.toRadians(pt1.getLongitude());</span>
+<span class="fc" id="L71">        double lat2Rad = Math.toRadians(pt2.getLatitude());</span>
+<span class="fc" id="L72">        double lon2Rad = Math.toRadians(pt2.getLongitude());</span>
+    
+        // Differences in latitude and longitude
+<span class="fc" id="L75">        double deltaLat = lat2Rad - lat1Rad;</span>
+<span class="fc" id="L76">        double deltaLon = lon2Rad - lon1Rad;</span>
+    
+        // Haversine formula
+<span class="fc" id="L79">        double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2)</span>
+<span class="fc" id="L80">                + Math.cos(lat1Rad) * Math.cos(lat2Rad)</span>
+<span class="fc" id="L81">                * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);</span>
+<span class="fc" id="L82">        double c = 2 * Math.asin(Math.sqrt(a));</span>
+    
+        // Distance in km
+<span class="fc" id="L85">        return EARTH_RADIUS * c;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

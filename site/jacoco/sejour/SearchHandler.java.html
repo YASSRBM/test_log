@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SearchHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">test_log</a> &gt; <a href="index.source.html" class="el_package">sejour</a> &gt; <span class="el_source">SearchHandler.java</span></div><h1>SearchHandler.java</h1><pre class="source lang-java linenums">package sejour;
+import sejour.elements.*;
+
+import java.nio.file.Path;
+import java.time.Instant;
+import java.util.*;
+import java.util.logging.Logger;
+
+public class SearchHandler {
+<span class="fc" id="L10">    private static final Logger logger = Logger.getLogger(SearchHandler.class.getName());</span>
+<span class="fc" id="L11">    public SearchHandler(DataHandler dataHandler) {</span>
+<span class="fc" id="L12">        this.dataHandler = dataHandler;</span>
+<span class="fc" id="L13">    }</span>
+
+<span class="fc" id="L15">    public SearchHandler(DataHandler dataHandler, GeoUtils geoUtils) {</span>
+<span class="fc" id="L16">        this.geoUtils = geoUtils;</span>
+<span class="fc" id="L17">        this.dataHandler = dataHandler;</span>
+<span class="fc" id="L18">    }</span>
+
+<span class="nc" id="L20">    public SearchHandler() {</span>
+
+<span class="nc" id="L22">    }</span>
+
+<span class="pc" id="L24">    public DataHandler dataHandler = new DataHandler(null);</span>
+<span class="pc" id="L25">    private GeoUtils geoUtils = new GeoUtils();</span>
+
+    public List&lt;Forfait&gt; Search(CritereHotel critereHotel, CritereTrajet critereTrajet, CritereActivite critereActivite, CritereForfait critereForfait) {
+        // logger.info(&quot;Starting search for forfaits...&quot;);
+<span class="fc" id="L29">        List&lt;Hotel&gt; selectedHotels = SearchHotel(critereHotel);</span>
+        // logger.info(&quot;Selected hotels: &quot; + selectedHotels.size());
+<span class="fc" id="L31">        List&lt;Trajet&gt; selectedTrajets = SearchTrajet(critereTrajet);</span>
+        // logger.info(&quot;Selected trajets: &quot; + selectedTrajets.size());
+<span class="fc" id="L33">        List&lt;Activite&gt; selectedActivites = SearchActivite(critereActivite);</span>
+        // logger.info(&quot;Selected activities: &quot; + selectedActivites.size());
+    
+<span class="fc" id="L36">        List&lt;Forfait&gt; selectedForfaits = new ArrayList&lt;&gt;();</span>
+    
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (Hotel hotel : selectedHotels) {</span>
+<span class="fc" id="L39">            logger.info(&quot;Processing hotel: &quot; + hotel.getAdresse());</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">            for (Trajet trajetAller : selectedTrajets) {</span>
+<span class="fc" id="L41">                logger.info(&quot;Processing trajet aller: &quot; + trajetAller.getVilleDepart() + &quot; -&gt; &quot; + trajetAller.getVilleArrivee());</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">                for (Trajet trajetRetour : selectedTrajets) {</span>
+<span class="fc" id="L43">                    logger.info(&quot;Processing trajet retour: &quot; + trajetRetour.getVilleDepart() + &quot; -&gt; &quot; + trajetRetour.getVilleArrivee());</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">                    if (trajetAller.getVilleArrivee().equals(hotel.getVille()) &amp;&amp;</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">                            trajetAller.getVilleDepart().equals(critereForfait.getVilleDepart()) &amp;&amp;</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">                            trajetRetour.getVilleArrivee().equals(critereForfait.getVilleDepart())) {</span>
+<span class="fc" id="L47">                        logger.info(&quot;Matching trajets found for hotel: &quot; + hotel.getAdresse());</span>
+    
+<span class="fc" id="L49">                        List&lt;Activite&gt; activitesProches = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">                        for (Activite activite : selectedActivites) {</span>
+<span class="fc" id="L51">                            double distance = geoUtils.distanceEntre(</span>
+<span class="fc" id="L52">                                    geoUtils.GPS2Coordonnes(hotel.getAdresse()),</span>
+<span class="fc" id="L53">                                    geoUtils.GPS2Coordonnes(activite.getAdresse())</span>
+                            );
+<span class="fc" id="L55">                            logger.info(&quot;Distance between hotel and activity: &quot; + distance);</span>
+<span class="pc bpc" id="L56" title="1 of 4 branches missed.">                            if (critereActivite != null &amp;&amp; distance &lt;= critereActivite.getDistanceMax()) {</span>
+<span class="fc" id="L57">                                logger.info(&quot;----------------------------Close Activity added&quot;);</span>
+<span class="fc" id="L58">                                activitesProches.add(activite);</span>
+                            }
+<span class="fc" id="L60">                        }</span>
+<span class="fc" id="L61">                        logger.info(&quot;Number of nearby activities: &quot; + activitesProches.size());</span>
+
+<span class="fc" id="L63">                        double prixAdd = hotel.getPrix() * critereForfait.getDureeSejour() +</span>
+<span class="fc" id="L64">                                trajetAller.getPrix() + trajetRetour.getPrix();</span>
+<span class="fc" id="L65">                        activitesProches = maximiserActivite(activitesProches, critereForfait.getPrixMax() - prixAdd);</span>
+<span class="fc" id="L66">                        logger.info(&quot;Number of nearby activities within budget: &quot; + activitesProches.size());</span>
+    
+<span class="fc" id="L68">                        double prixTotal = prixAdd + activitesProches.stream().mapToDouble(Activite::getPrix).sum();</span>
+<span class="fc" id="L69">                        logger.info(&quot;Total price of the forfait: &quot; + prixTotal);</span>
+    
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">                        if (prixTotal &lt;= critereForfait.getPrixMax()) {</span>
+<span class="fc" id="L72">                            Forfait forfait = new Forfait();</span>
+<span class="fc" id="L73">                            forfait.setHotel(hotel);</span>
+<span class="fc" id="L74">                            forfait.setTransportAlle(trajetAller);</span>
+<span class="fc" id="L75">                            forfait.setTransportRetour(trajetRetour);</span>
+<span class="fc" id="L76">                            forfait.setActivites(activitesProches);</span>
+<span class="fc" id="L77">                            selectedForfaits.add(forfait);</span>
+<span class="fc" id="L78">                            logger.info(&quot;Added forfait to selected forfaits&quot;);</span>
+<span class="fc" id="L79">                        } else {</span>
+<span class="nc" id="L80">                            logger.info(&quot;Forfait price exceeds the maximum price&quot;);</span>
+                        }
+<span class="fc" id="L82">                    } else {</span>
+<span class="fc" id="L83">                        logger.info(&quot;Trajets do not match the hotel and forfait criteria&quot;);</span>
+                    }
+<span class="fc" id="L85">                }</span>
+<span class="fc" id="L86">            }</span>
+<span class="fc" id="L87">        }</span>
+    
+<span class="fc" id="L89">        logger.info(&quot;Number of selected forfaits: &quot; + selectedForfaits.size());</span>
+
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if(critereHotel != null) {</span>
+            // Sort hotels based on priority
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">            if (critereHotel.getPrioriteHotel() == CritereHotel.PrioriteHotel.CLASSEMENT) {</span>
+<span class="fc" id="L94">                selectedForfaits.sort((f1, f2) -&gt; Integer.compare(f2.getHotel().getClassement(), f1.getHotel().getClassement()));</span>
+                // logger.info(&quot;Sorted forfaits based on hotel classement&quot;);
+            } else {
+<span class="nc" id="L97">                selectedForfaits.sort((f1, f2) -&gt; Double.compare(f1.getHotel().getPrix(), f2.getHotel().getPrix()));</span>
+                // logger.info(&quot;Sorted forfaits based on hotel price&quot;);
+            }
+        }
+    
+        // Sort trajets based on priority
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        if(critereTrajet != null) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">            if (critereTrajet.getPrioriteTrajet() == CritereTrajet.PrioriteTrajet.TEMPS) {</span>
+<span class="fc" id="L105">                selectedForfaits.sort((f1, f2) -&gt; {</span>
+<span class="fc" id="L106">                    Instant tempsAller1 = f1.getTransportAlle().getTempsArrivee();</span>
+<span class="fc" id="L107">                    Instant tempsAller2 = f2.getTransportAlle().getTempsArrivee();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">                    if (tempsAller1.equals(tempsAller2)) {</span>
+<span class="fc" id="L109">                        return Double.compare(f1.getTransportAlle().getPrix(), f2.getTransportAlle().getPrix());</span>
+                    }
+<span class="fc" id="L111">                    return tempsAller1.compareTo(tempsAller2);</span>
+                });
+                // logger.info(&quot;Sorted forfaits based on trajet time&quot;);
+            } else {
+<span class="fc" id="L115">                selectedForfaits.sort((f1, f2) -&gt; {</span>
+<span class="fc" id="L116">                    double prixAller1 = f1.getTransportAlle().getPrix();</span>
+<span class="fc" id="L117">                    double prixAller2 = f2.getTransportAlle().getPrix();</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">                    if (prixAller1 == prixAller2) {</span>
+<span class="fc" id="L119">                        return f1.getTransportAlle().getTempsArrivee().compareTo(f2.getTransportAlle().getTempsArrivee());</span>
+                    }
+<span class="nc" id="L121">                    return Double.compare(prixAller1, prixAller2);</span>
+                });
+                // logger.info(&quot;Sorted forfaits based on trajet price&quot;);
+            }
+        }
+
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        if(critereTrajet != null) {</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">            if (critereTrajet.getPrioriteTrajet() == CritereTrajet.PrioriteTrajet.TEMPS) {</span>
+<span class="fc" id="L129">                selectedForfaits.sort((f1, f2) -&gt; {</span>
+<span class="fc" id="L130">                    Instant tempsAller1 = f1.getTransportRetour().getTempsArrivee();</span>
+<span class="fc" id="L131">                    Instant tempsAller2 = f2.getTransportRetour().getTempsArrivee();</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">                    if (tempsAller1.equals(tempsAller2)) {</span>
+<span class="fc" id="L133">                        return Double.compare(f1.getTransportRetour().getPrix(), f2.getTransportRetour().getPrix());</span>
+                    }
+<span class="nc" id="L135">                    return tempsAller1.compareTo(tempsAller2);</span>
+                });
+                // logger.info(&quot;Sorted forfaits based on trajet time&quot;);
+            } else {
+<span class="fc" id="L139">                selectedForfaits.sort((f1, f2) -&gt; {</span>
+<span class="fc" id="L140">                    double prixAller1 = f1.getTransportRetour().getPrix();</span>
+<span class="fc" id="L141">                    double prixAller2 = f2.getTransportRetour().getPrix();</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">                    if (prixAller1 == prixAller2) {</span>
+<span class="fc" id="L143">                        return f1.getTransportRetour().getTempsArrivee().compareTo(f2.getTransportRetour().getTempsArrivee());</span>
+                    }
+<span class="fc" id="L145">                    return Double.compare(prixAller1, prixAller2);</span>
+                });
+                // logger.info(&quot;Sorted forfaits based on trajet price&quot;);
+            }
+        }
+    
+<span class="fc" id="L151">        logger.info(&quot;Search completed&quot;);</span>
+<span class="fc" id="L152">        return selectedForfaits;</span>
+    }
+
+    public List&lt;Hotel&gt; SearchHotel(CritereHotel critere){
+<span class="fc" id="L156">        List&lt;Hotel&gt; tousHotels = dataHandler.getHotels();</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if(critere != null) {</span>
+<span class="fc" id="L158">            List&lt;Hotel&gt; selectedHotels = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">            for (Hotel hotel : tousHotels) {</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">                if (hotel.getClassement() &gt;= critere.getMinClassement()) {</span>
+<span class="fc" id="L161">                    selectedHotels.add(hotel);</span>
+                }
+<span class="fc" id="L163">            }</span>
+<span class="fc" id="L164">            logger.info(&quot;Selected hotels: &quot; + selectedHotels.size());</span>
+<span class="fc" id="L165">            return selectedHotels;</span>
+        }
+<span class="fc" id="L167">        return tousHotels;</span>
+    }
+
+    public List&lt;Trajet&gt; SearchTrajet(CritereTrajet critere){
+<span class="fc" id="L171">        List&lt;Trajet&gt; tousTrajet = dataHandler.getTrajets();</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        if(critere != null) {</span>
+
+<span class="fc" id="L174">            logger.info(&quot;Total trajets: &quot; + tousTrajet.size());</span>
+<span class="fc" id="L175">            List&lt;Trajet&gt; selectedTrajet = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">            for (Trajet trajet : tousTrajet) {</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">                if (trajet.getModeTransport() == critere.getModeTrajet()) {</span>
+<span class="fc" id="L178">                    selectedTrajet.add(trajet);</span>
+                }
+<span class="fc" id="L180">            }</span>
+<span class="fc" id="L181">            logger.info(&quot;Selected trajets: &quot; + selectedTrajet.size());</span>
+<span class="fc" id="L182">            return selectedTrajet;</span>
+        }
+<span class="fc" id="L184">        return tousTrajet;</span>
+    }
+
+    public List&lt;Activite&gt; SearchActivite(CritereActivite critere){
+<span class="fc" id="L188">        List&lt;Activite&gt; tousActivite = dataHandler.getActivites();</span>
+<span class="fc" id="L189">        logger.info(&quot;Total activities: &quot; + tousActivite.size());</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        if(critere != null) {</span>
+<span class="fc" id="L191">            List&lt;Activite&gt; selectedActivite = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">            for (Activite activite : tousActivite) {</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">                if (activite.getCategorie() != critere.getCategorie()) {</span>
+<span class="fc" id="L194">                    selectedActivite.add(activite);</span>
+                }
+<span class="fc" id="L196">            }</span>
+<span class="fc" id="L197">            logger.info(&quot;Selected activities: &quot; + selectedActivite.size());</span>
+<span class="fc" id="L198">            return selectedActivite;</span>
+        }
+<span class="fc" id="L200">        return tousActivite;</span>
+    }
+
+    private List&lt;Activite&gt; maximiserActivite(List&lt;Activite&gt; activites, double budget){
+<span class="fc" id="L204">        activites.sort(Comparator.comparingDouble(Activite::getPrix));</span>
+<span class="fc" id="L205">        List&lt;Activite&gt; maximise = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L206">        double budgetAct = 0;</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">        for(Activite act : activites){</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">            if(budgetAct + act.getPrix() &lt;= budget){</span>
+<span class="fc" id="L209">                maximise.add(act);</span>
+<span class="fc" id="L210">                budgetAct += act.getPrix();</span>
+            }else {
+                break;
+            }
+<span class="fc" id="L214">        }</span>
+<span class="fc" id="L215">        return maximise;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

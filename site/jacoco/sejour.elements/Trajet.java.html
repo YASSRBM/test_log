@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Trajet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">test_log</a> &gt; <a href="index.source.html" class="el_package">sejour.elements</a> &gt; <span class="el_source">Trajet.java</span></div><h1>Trajet.java</h1><pre class="source lang-java linenums">package sejour.elements;
+
+import java.time.Instant;
+
+public class Trajet {
+
+<span class="fc" id="L7">    public enum ModeTrajet {AVION, TRAIN, VOITURE, BUS}</span>
+    private String villeDepart;
+    private String villeArrivee;
+    private Instant tempsDepart;
+    private Instant tempsArrivee;
+    private ModeTrajet modeTransport;
+    private double prix;
+
+<span class="fc" id="L15">    public Trajet(String villeDepart, String villeArrivee, Instant tempsDepart, Instant tempsArrivee, ModeTrajet modeTransport, double prix) {</span>
+<span class="fc" id="L16">        this.villeDepart = villeDepart;</span>
+<span class="fc" id="L17">        this.villeArrivee = villeArrivee;</span>
+<span class="fc" id="L18">        this.tempsDepart = tempsDepart;</span>
+<span class="fc" id="L19">        this.tempsArrivee = tempsArrivee;</span>
+<span class="fc" id="L20">        this.modeTransport = modeTransport;</span>
+<span class="fc" id="L21">        this.prix = prix;</span>
+<span class="fc" id="L22">    }</span>
+<span class="fc" id="L23">    public Trajet(){}</span>
+
+    public String getVilleDepart() {
+<span class="fc" id="L26">        return villeDepart;</span>
+    }
+
+    public void setVilleDepart(String villeDepart) {
+<span class="fc" id="L30">        this.villeDepart = villeDepart;</span>
+<span class="fc" id="L31">    }</span>
+
+    public String getVilleArrivee() {
+<span class="fc" id="L34">        return villeArrivee;</span>
+    }
+
+    public void setVilleArrivee(String villeArrivee) {
+<span class="fc" id="L38">        this.villeArrivee = villeArrivee;</span>
+<span class="fc" id="L39">    }</span>
+
+    public Instant getTempsDepart() {
+<span class="fc" id="L42">        return tempsDepart;</span>
+    }
+
+    public void setTempsDepart(Instant tempsDepart) {
+<span class="fc" id="L46">        this.tempsDepart = tempsDepart;</span>
+<span class="fc" id="L47">    }</span>
+
+    public Instant getTempsArrivee() {
+<span class="fc" id="L50">        return tempsArrivee;</span>
+    }
+
+    public void setTempsArrivee(Instant tempsArrivee) {
+<span class="fc" id="L54">        this.tempsArrivee = tempsArrivee;</span>
+<span class="fc" id="L55">    }</span>
+
+    public ModeTrajet getModeTransport() {
+<span class="fc" id="L58">        return modeTransport;</span>
+    }
+
+    public void setModeTransport(ModeTrajet modeTransport) {
+<span class="fc" id="L62">        this.modeTransport = modeTransport;</span>
+<span class="fc" id="L63">    }</span>
+
+    public double getPrix() {
+<span class="fc" id="L66">        return prix;</span>
+    }
+
+    public void setPrix(double prix) {
+<span class="fc" id="L70">        this.prix = prix;</span>
+<span class="fc" id="L71">    }</span>
+
+    public ModeTrajet fromString(String modeTrajetStr) {
+<span class="fc bfc" id="L74" title="All 5 branches covered.">        switch (modeTrajetStr.toUpperCase()) {</span>
+            case &quot;AVION&quot;:
+<span class="fc" id="L76">                return ModeTrajet.AVION;</span>
+            case &quot;TRAIN&quot;:
+<span class="fc" id="L78">                return ModeTrajet.TRAIN;</span>
+            case &quot;VOITURE&quot;:
+<span class="fc" id="L80">                return ModeTrajet.VOITURE;</span>
+            case &quot;BUS&quot;:
+<span class="fc" id="L82">                return ModeTrajet.BUS;</span>
+            default:
+<span class="fc" id="L84">                throw new IllegalArgumentException(&quot;Unknown category: &quot; + modeTrajetStr);</span>
+        }
+    }
+
+
+    @Override
+    public String toString() {
+<span class="nc" id="L91">        return &quot;Départ: &quot; + villeDepart + &quot; -&gt; Arrivée: &quot; + villeArrivee +</span>
+                &quot;, Date départ: &quot; + tempsDepart + &quot;, Date arrivée: &quot; + tempsArrivee +
+                &quot;, Mode: &quot; + modeTransport + &quot;, Prix: &quot; + prix;
+    }
+    
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
