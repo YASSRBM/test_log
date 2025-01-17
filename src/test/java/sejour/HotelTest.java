@@ -35,7 +35,7 @@ public class HotelTest {
         assertTrue(hotel.getClassement() >= 1 && hotel.getClassement() <= 5, "Le classement doit être entre 1 et 5 étoiles.");
     }
 
-/*     @Test
+    @Test
     public void testInvalidClassement() {
         // Arrange
         Hotel hotel = new Hotel();
@@ -45,7 +45,7 @@ public class HotelTest {
 
         // Assert
         assertTrue(hotel.getClassement() >= 1 && hotel.getClassement() <= 5, "Le classement ne doit pas être inférieur à 1.");
-    } */
+    }
 
     @Test
     public void testPrixPositif() {
@@ -59,30 +59,5 @@ public class HotelTest {
         assertTrue(hotel.getPrix() > 0, "Le prix doit être supérieur à 0.");
     }
 
-/*     @Test
-    public void testAdresseNonVide() {
-        // Arrange
-        Hotel hotel = new Hotel();
-
-        // Act
-        hotel.setAdresse("");
-
-        // Assert
-        assertNotNull(hotel.getAdresse(), "L'adresse ne doit pas être null.");
-        assertFalse(hotel.getAdresse().isEmpty(), "L'adresse ne doit pas être vide.");
-    }
-
-    @Test
-    public void testVilleNonVide() {
-        // Arrange
-        Hotel hotel = new Hotel();
-
-        // Act
-        hotel.setVille("");
-
-        // Assert
-        assertNotNull(hotel.getVille(), "La ville ne doit pas être null.");
-        assertFalse(hotel.getVille().isEmpty(), "La ville ne doit pas être vide.");
-    } */
 }
  

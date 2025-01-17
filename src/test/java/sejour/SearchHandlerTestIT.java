@@ -24,7 +24,7 @@ public class SearchHandlerTestIT {
         CritereHotel critereHotel = new CritereHotel(1, CritereHotel.PrioriteHotel.CLASSEMENT);
         CritereTrajet critereTrajet = new CritereTrajet(Trajet.ModeTrajet.TRAIN, CritereTrajet.PrioriteTrajet.PRIX);
         CritereActivite critereActivite = new CritereActivite(Activite.Categorie.SPORT, 500.00);
-        CritereForfait critereForfait = new CritereForfait("Paris", 3, 500);
+        CritereForfait critereForfait = new CritereForfait("Paris", "Lyon", 3, 500);
 
         // Appeler la méthode Search
         List<Forfait> result = searchHandler.Search(critereHotel, critereTrajet, critereActivite, critereForfait);
@@ -53,7 +53,7 @@ public class SearchHandlerTestIT {
         CritereHotel critereHotel = new CritereHotel(1, CritereHotel.PrioriteHotel.CLASSEMENT);
         CritereTrajet critereTrajet = new CritereTrajet(Trajet.ModeTrajet.TRAIN, CritereTrajet.PrioriteTrajet.PRIX);
         CritereActivite critereActivite = new CritereActivite(Activite.Categorie.SPORT, 500.00);
-        CritereForfait critereForfait = new CritereForfait("Paris", 3, 500);
+        CritereForfait critereForfait = new CritereForfait("Paris", "Lyon", 3, 500);
 
         // Appeler la méthode Search
         List<Forfait> result = searchHandler.Search(critereHotel, critereTrajet, critereActivite, critereForfait);

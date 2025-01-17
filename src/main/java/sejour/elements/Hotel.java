@@ -30,7 +30,11 @@ public class Hotel {
     }
 
     public void setClassement(int classement) {
-        this.classement = classement;
+        if(classement >= 1 && classement <= 5) {
+            this.classement = classement;
+        }else{
+            this.classement = 1;
+        }
     }
 
     public double getPrix() {
