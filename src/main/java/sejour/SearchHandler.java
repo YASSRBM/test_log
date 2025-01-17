@@ -48,13 +48,12 @@ public class SearchHandler {
     
                         List<Activite> activitesProches = new ArrayList<>();
                         for (Activite activite : selectedActivites) {
-                            System.out.println(" asdasdasdasd!"+ hotel.getAdresse() + "    "+activite.getAdresse());
                             double distance = geoUtils.distanceEntre(
                                     geoUtils.GPS2Coordonnes(hotel.getAdresse()),
                                     geoUtils.GPS2Coordonnes(activite.getAdresse())
                             );
                             logger.info("Distance between hotel and activity: " + distance);
-                            if (distance <= critereActivite.getDistanceMax()) {
+                            if (critereActivite != null && distance <= critereActivite.getDistanceMax()) {
                                 logger.info("----------------------------Close Activity added");
                                 activitesProches.add(activite);
                             }
@@ -88,59 +87,65 @@ public class SearchHandler {
         }
     
         logger.info("Number of selected forfaits: " + selectedForfaits.size());
-    
-        // Sort hotels based on priority
-        if (critereHotel.getPrioriteHotel() == CritereHotel.PrioriteHotel.CLASSEMENT) {
-            selectedForfaits.sort((f1, f2) -> Integer.compare(f2.getHotel().getClassement(), f1.getHotel().getClassement()));
-            // logger.info("Sorted forfaits based on hotel classement");
-        } else {
-            selectedForfaits.sort((f1, f2) -> Double.compare(f1.getHotel().getPrix(), f2.getHotel().getPrix()));
-            // logger.info("Sorted forfaits based on hotel price");
+
+        if(critereHotel != null) {
+            // Sort hotels based on priority
+            if (critereHotel.getPrioriteHotel() == CritereHotel.PrioriteHotel.CLASSEMENT) {
+                selectedForfaits.sort((f1, f2) -> Integer.compare(f2.getHotel().getClassement(), f1.getHotel().getClassement()));
+                // logger.info("Sorted forfaits based on hotel classement");
+            } else {
+                selectedForfaits.sort((f1, f2) -> Double.compare(f1.getHotel().getPrix(), f2.getHotel().getPrix()));
+                // logger.info("Sorted forfaits based on hotel price");
+            }
         }
     
         // Sort trajets based on priority
-        if (critereTrajet.getPrioriteTrajet() == CritereTrajet.PrioriteTrajet.TEMPS) {
-            selectedForfaits.sort((f1, f2) -> {
-                Instant tempsAller1 = f1.getTransportAlle().getTempsArrivee();
-                Instant tempsAller2 = f2.getTransportAlle().getTempsArrivee();
-                if(tempsAller1.equals(tempsAller2)){
-                    return Double.compare(f1.getTransportAlle().getPrix(), f2.getTransportAlle().getPrix());
-                }
-                return tempsAller1.compareTo(tempsAller2);
-            });
-            // logger.info("Sorted forfaits based on trajet time");
-        } else {
-            selectedForfaits.sort((f1, f2) -> {
-                double prixAller1 = f1.getTransportAlle().getPrix();
-                double prixAller2 = f2.getTransportAlle().getPrix();
-                if(prixAller1 == prixAller2){
-                    return f1.getTransportAlle().getTempsArrivee().compareTo(f2.getTransportAlle().getTempsArrivee());
-                }
-                return Double.compare(prixAller1, prixAller2);
-            });
-            // logger.info("Sorted forfaits based on trajet price");
+        if(critereTrajet != null) {
+            if (critereTrajet.getPrioriteTrajet() == CritereTrajet.PrioriteTrajet.TEMPS) {
+                selectedForfaits.sort((f1, f2) -> {
+                    Instant tempsAller1 = f1.getTransportAlle().getTempsArrivee();
+                    Instant tempsAller2 = f2.getTransportAlle().getTempsArrivee();
+                    if (tempsAller1.equals(tempsAller2)) {
+                        return Double.compare(f1.getTransportAlle().getPrix(), f2.getTransportAlle().getPrix());
+                    }
+                    return tempsAller1.compareTo(tempsAller2);
+                });
+                // logger.info("Sorted forfaits based on trajet time");
+            } else {
+                selectedForfaits.sort((f1, f2) -> {
+                    double prixAller1 = f1.getTransportAlle().getPrix();
+                    double prixAller2 = f2.getTransportAlle().getPrix();
+                    if (prixAller1 == prixAller2) {
+                        return f1.getTransportAlle().getTempsArrivee().compareTo(f2.getTransportAlle().getTempsArrivee());
+                    }
+                    return Double.compare(prixAller1, prixAller2);
+                });
+                // logger.info("Sorted forfaits based on trajet price");
+            }
         }
 
-        if (critereTrajet.getPrioriteTrajet() == CritereTrajet.PrioriteTrajet.TEMPS) {
-            selectedForfaits.sort((f1, f2) -> {
-                Instant tempsAller1 = f1.getTransportRetour().getTempsArrivee();
-                Instant tempsAller2 = f2.getTransportRetour().getTempsArrivee();
-                if(tempsAller1.equals(tempsAller2)){
-                    return Double.compare(f1.getTransportRetour().getPrix(), f2.getTransportRetour().getPrix());
-                }
-                return tempsAller1.compareTo(tempsAller2);
-            });
-            // logger.info("Sorted forfaits based on trajet time");
-        } else {
-            selectedForfaits.sort((f1, f2) -> {
-                double prixAller1 = f1.getTransportRetour().getPrix();
-                double prixAller2 = f2.getTransportRetour().getPrix();
-                if(prixAller1 == prixAller2){
-                    return f1.getTransportRetour().getTempsArrivee().compareTo(f2.getTransportRetour().getTempsArrivee());
-                }
-                return Double.compare(prixAller1, prixAller2);
-            });
-            // logger.info("Sorted forfaits based on trajet price");
+        if(critereTrajet != null) {
+            if (critereTrajet.getPrioriteTrajet() == CritereTrajet.PrioriteTrajet.TEMPS) {
+                selectedForfaits.sort((f1, f2) -> {
+                    Instant tempsAller1 = f1.getTransportRetour().getTempsArrivee();
+                    Instant tempsAller2 = f2.getTransportRetour().getTempsArrivee();
+                    if (tempsAller1.equals(tempsAller2)) {
+                        return Double.compare(f1.getTransportRetour().getPrix(), f2.getTransportRetour().getPrix());
+                    }
+                    return tempsAller1.compareTo(tempsAller2);
+                });
+                // logger.info("Sorted forfaits based on trajet time");
+            } else {
+                selectedForfaits.sort((f1, f2) -> {
+                    double prixAller1 = f1.getTransportRetour().getPrix();
+                    double prixAller2 = f2.getTransportRetour().getPrix();
+                    if (prixAller1 == prixAller2) {
+                        return f1.getTransportRetour().getTempsArrivee().compareTo(f2.getTransportRetour().getTempsArrivee());
+                    }
+                    return Double.compare(prixAller1, prixAller2);
+                });
+                // logger.info("Sorted forfaits based on trajet price");
+            }
         }
     
         logger.info("Search completed");
@@ -149,40 +154,50 @@ public class SearchHandler {
 
     public List<Hotel> SearchHotel(CritereHotel critere){
         List<Hotel> tousHotels = dataHandler.getHotels();
-        List<Hotel> selectedHotels = new ArrayList<>();
-        for(Hotel hotel : tousHotels){
-            if(hotel.getClassement() >= critere.getMinClassement()){
-                selectedHotels.add(hotel);
+        if(critere != null) {
+            List<Hotel> selectedHotels = new ArrayList<>();
+            for (Hotel hotel : tousHotels) {
+                if (hotel.getClassement() >= critere.getMinClassement()) {
+                    selectedHotels.add(hotel);
+                }
             }
+            logger.info("Selected hotels: " + selectedHotels.size());
+            return selectedHotels;
         }
-        logger.info("Selected hotels: " + selectedHotels.size());
-        return  selectedHotels;
+        return tousHotels;
     }
 
     public List<Trajet> SearchTrajet(CritereTrajet critere){
         List<Trajet> tousTrajet = dataHandler.getTrajets();
-        logger.info("Total trajets: " + tousTrajet.size());
-        List<Trajet> selectedTrajet = new ArrayList<>();
-        for(Trajet trajet : tousTrajet){
-            if(trajet.getModeTransport() == critere.getModeTrajet()){
-                selectedTrajet.add(trajet);
+        if(critere != null) {
+
+            logger.info("Total trajets: " + tousTrajet.size());
+            List<Trajet> selectedTrajet = new ArrayList<>();
+            for (Trajet trajet : tousTrajet) {
+                if (trajet.getModeTransport() == critere.getModeTrajet()) {
+                    selectedTrajet.add(trajet);
+                }
             }
+            logger.info("Selected trajets: " + selectedTrajet.size());
+            return selectedTrajet;
         }
-        logger.info("Selected trajets: " + selectedTrajet.size());
-        return selectedTrajet;
+        return tousTrajet;
     }
 
     public List<Activite> SearchActivite(CritereActivite critere){
         List<Activite> tousActivite = dataHandler.getActivites();
         logger.info("Total activities: " + tousActivite.size());
-        List<Activite> selectedActivite = new ArrayList<>();
-        for(Activite activite : tousActivite){
-            if(activite.getCategorie() != critere.getCategorie()){
-                selectedActivite.add(activite);
+        if(critere != null) {
+            List<Activite> selectedActivite = new ArrayList<>();
+            for (Activite activite : tousActivite) {
+                if (activite.getCategorie() != critere.getCategorie()) {
+                    selectedActivite.add(activite);
+                }
             }
+            logger.info("Selected activities: " + selectedActivite.size());
+            return selectedActivite;
         }
-        logger.info("Selected activities: " + selectedActivite.size());
-        return  selectedActivite;
+        return tousActivite;
     }
 
     private List<Activite> maximiserActivite(List<Activite> activites, double budget){

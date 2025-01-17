@@ -8,6 +8,7 @@
 
  import java.text.SimpleDateFormat;
  import java.time.Instant;
+ import java.util.ArrayList;
  import java.util.Arrays;
  import java.util.List;
 
@@ -221,33 +222,109 @@ import static org.mockito.Mockito.*;
          verify(dataHandler, times(1)).getActivites();
      }
 
+
      @Test
-     void testSortForfaitsByTempsAndPrix() {
+     public void testSearchSortingHotelByClassement() throws Exception {
+         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+         // Create test data with different hotel classements
+         Hotel hotel1 = new Hotel();
+         hotel1.setClassement(4);
+         Hotel hotel2 = new Hotel();
+         hotel2.setClassement(3);
+
          Forfait forfait1 = new Forfait();
-         forfait1.setTransportAlle(new Trajet("Paris", "Lyon", Instant.parse("2025-01-10T08:00:00Z"), Instant.parse("2025-01-10T12:00:00Z"), Trajet.ModeTrajet.TRAIN, 50.0));
-
+         forfait1.setHotel(hotel1);
          Forfait forfait2 = new Forfait();
-         forfait2.setTransportAlle(new Trajet("Paris", "Lyon", Instant.parse("2025-01-10T08:00:00Z"), Instant.parse("2025-01-10T12:00:00Z"), Trajet.ModeTrajet.TRAIN, 40.0));
+         forfait2.setHotel(hotel2);
 
-         Forfait forfait3 = new Forfait();
-         forfait3.setTransportAlle(new Trajet("Paris", "Lyon", Instant.parse("2025-01-10T08:00:00Z"), Instant.parse("2025-01-10T11:00:00Z"), Trajet.ModeTrajet.TRAIN, 60.0));
+         List<Forfait> selectedForfaits = new ArrayList<>();
+         selectedForfaits.add(forfait1);
+         selectedForfaits.add(forfait2);
 
-         List<Forfait> selectedForfaits = Arrays.asList(forfait1, forfait2, forfait3);
+         // Données fictives
+         Hotel hotel = new Hotel("Hotel A", "Lyon", 4, 100.00); // Prix : 100€/nuit
+         Trajet trajetAller1 = new Trajet("Paris", "Lyon", Instant.parse("2025-01-10T08:00:00Z"), Instant.parse("2025-01-10T12:00:00Z"), Trajet.ModeTrajet.TRAIN, 50.00); // Prix : 50€, Durée : 4h
+         Trajet trajetAller2 = new Trajet("Paris", "Lyon", Instant.parse("2025-01-10T08:00:00Z"), Instant.parse("2025-01-10T11:30:00Z"), Trajet.ModeTrajet.TRAIN, 50.00); // Prix : 50€, Durée : 3h30
+         Trajet trajetRetour1 = new Trajet("Lyon", "Paris",  Instant.parse("2025-01-12T08:00:00Z"), Instant.parse("2025-01-12T12:00:00Z"), Trajet.ModeTrajet.TRAIN, 50.00); // Prix : 50€
+         Trajet trajetRetour2 = new Trajet("Lyon", "Paris",  Instant.parse("2025-01-12T08:00:00Z"), Instant.parse("2025-01-12T12:00:00Z"), Trajet.ModeTrajet.TRAIN, 60.00); // Prix : 50€
 
-         // Tri basé sur la logique
-         selectedForfaits.sort((f1, f2) -> {
-             Instant tempsAller1 = f1.getTransportAlle().getTempsArrivee();
-             Instant tempsAller2 = f2.getTransportAlle().getTempsArrivee();
-             if (tempsAller1.equals(tempsAller2)) {
-                 return Double.compare(f1.getTransportAlle().getPrix(), f2.getTransportAlle().getPrix());
-             }
-             return tempsAller1.compareTo(tempsAller2);
-         });
+         // Activités fictives
+         Activite activite1 = new Activite("123 Rue de Paris", sdf.parse("2025-01-11"), Activite.Categorie.SPORT, 20.00); // Prix : 20€
+         Activite activite2 = new Activite("456 Avenue de Lyon", sdf.parse("2025-01-12"), Activite.Categorie.SPORT, 30.00); // Prix : 30€
 
-         // Vérifications
-         assertEquals(forfait3, selectedForfaits.get(0), "Le forfait avec le temps d'arrivée le plus tôt doit être en premier");
-         assertEquals(forfait2, selectedForfaits.get(1), "En cas d'égalité, le forfait le moins cher doit être en premier");
-         assertEquals(forfait1, selectedForfaits.get(2), "Le forfait restant doit être en dernier");
+         // Configurer le DataHandler
+         when(dataHandler.getHotels()).thenReturn(List.of(hotel));
+         when(dataHandler.getTrajets()).thenReturn(List.of(trajetAller1, trajetAller2, trajetRetour1, trajetRetour2));
+         when(dataHandler.getActivites()).thenReturn(List.of(activite1, activite2));
+
+         when(geoUtils.GPS2Coordonnes(hotel.getAdresse()))
+                 .thenReturn(new Coordonnes(45.764, 4.8357)); // Lyon
+         when(geoUtils.GPS2Coordonnes(anyString()))
+                 .thenReturn(new Coordonnes(48.8566, 2.3522)); // Paris par défaut
+         when(geoUtils.distanceEntre(Mockito.any(Coordonnes.class), Mockito.any(Coordonnes.class)))
+                 .thenReturn(300.0); // Distance fictive, toujours dans la limite
+
+         CritereHotel critereHotel = new CritereHotel(2, CritereHotel.PrioriteHotel.CLASSEMENT);
+         CritereForfait critereForfait = new CritereForfait("Paris", "Paris", 2, 400);
+
+         // Perform the search and sorting
+         List<Forfait> sortedForfaits = new SearchHandler(dataHandler, geoUtils).Search(critereHotel, null, null, critereForfait);
+
+         // Assert the correct sorting order
+         assertEquals(4, sortedForfaits.get(0).getHotel().getClassement());
+         assertEquals(4, sortedForfaits.get(1).getHotel().getClassement());
+     }
+
+     @Test
+     public void testSearchSortingTrajetByTemps() throws Exception {
+         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+         // Create test data with different trajet temps
+         Trajet trajet1 = new Trajet();
+         trajet1.setTempsArrivee(Instant.parse("2023-07-01T10:30:00Z"));
+         Trajet trajet2 = new Trajet();
+         trajet2.setTempsArrivee(Instant.parse("2023-07-01T12:00:00Z"));
+
+         Forfait forfait1 = new Forfait();
+         forfait1.setTransportAlle(trajet1);
+         Forfait forfait2 = new Forfait();
+         forfait2.setTransportAlle(trajet2);
+
+         List<Forfait> selectedForfaits = new ArrayList<>();
+         selectedForfaits.add(forfait1);
+         selectedForfaits.add(forfait2);
+
+         // Données fictives
+         Hotel hotel = new Hotel("Hotel A", "Lyon", 4, 100.00); // Prix : 100€/nuit
+         Trajet trajetAller1 = new Trajet("Paris", "Lyon", Instant.parse("2025-01-10T08:00:00Z"), Instant.parse("2025-01-10T12:00:00Z"), Trajet.ModeTrajet.TRAIN, 50.00); // Prix : 50€, Durée : 4h
+         Trajet trajetAller2 = new Trajet("Paris", "Lyon", Instant.parse("2025-01-10T08:00:00Z"), Instant.parse("2025-01-10T11:30:00Z"), Trajet.ModeTrajet.TRAIN, 50.00); // Prix : 50€, Durée : 3h30
+         Trajet trajetRetour1 = new Trajet("Lyon", "Paris",  Instant.parse("2025-01-12T08:00:00Z"), Instant.parse("2025-01-12T12:00:00Z"), Trajet.ModeTrajet.TRAIN, 50.00); // Prix : 50€
+         Trajet trajetRetour2 = new Trajet("Lyon", "Paris",  Instant.parse("2025-01-12T08:00:00Z"), Instant.parse("2025-01-12T12:00:00Z"), Trajet.ModeTrajet.TRAIN, 60.00); // Prix : 50€
+
+         // Activités fictives
+         Activite activite1 = new Activite("123 Rue de Paris", sdf.parse("2025-01-11"), Activite.Categorie.SPORT, 20.00); // Prix : 20€
+         Activite activite2 = new Activite("456 Avenue de Lyon", sdf.parse("2025-01-12"), Activite.Categorie.SPORT, 30.00); // Prix : 30€
+
+         // Configurer le DataHandler
+         when(dataHandler.getHotels()).thenReturn(List.of(hotel));
+         when(dataHandler.getTrajets()).thenReturn(List.of(trajetAller1, trajetAller2, trajetRetour1, trajetRetour2));
+         when(dataHandler.getActivites()).thenReturn(List.of(activite1, activite2));
+
+         when(geoUtils.GPS2Coordonnes(hotel.getAdresse()))
+                 .thenReturn(new Coordonnes(45.764, 4.8357)); // Lyon
+         when(geoUtils.GPS2Coordonnes(anyString()))
+                 .thenReturn(new Coordonnes(48.8566, 2.3522)); // Paris par défaut
+         when(geoUtils.distanceEntre(Mockito.any(Coordonnes.class), Mockito.any(Coordonnes.class)))
+                 .thenReturn(300.0); // Distance fictive, toujours dans la limite
+
+         CritereTrajet critereTrajet = new CritereTrajet(Trajet.ModeTrajet.TRAIN, CritereTrajet.PrioriteTrajet.TEMPS);
+         CritereForfait critereForfait = new CritereForfait("Paris", "Paris", 2, 400);
+
+         // Perform the search and sorting
+         List<Forfait> sortedForfaits = new SearchHandler(dataHandler, geoUtils).Search(null, critereTrajet, null, critereForfait);
+
+         // Assert the correct sorting order
+         assertEquals(Instant.parse("2025-01-10T11:30:00Z"), sortedForfaits.get(0).getTransportAlle().getTempsArrivee());
+         assertEquals(Instant.parse("2025-01-10T12:00:00Z"), sortedForfaits.get(1).getTransportAlle().getTempsArrivee());
      }
 
 

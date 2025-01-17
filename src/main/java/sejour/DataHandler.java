@@ -59,7 +59,6 @@ public class DataHandler {
             if(folderPath==null) 
             hotelsFilePath = Paths.get("src/main/java/sejour/data/Hotels.json");
             else {
-                System.out.println(folderPath);
                 hotelsFilePath=Paths.get(folderPath.toString()+"/Hotels.json");
             }
         
@@ -86,7 +85,7 @@ public class DataHandler {
                 // System.out.println("Hotel: " + hotel.getAdresse() + ", Ville: " + hotel.getVille() + ", Classement: " + hotel.getClassement() + ", Prix: " + hotel.getPrix());
             // }
         } catch (IOException e) {
-            System.err.println("Error reading Hotels.json file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -118,14 +117,14 @@ public class DataHandler {
                     Date date = dateFormat.parse(activityJson.getString("date"));
                     activite.setDate(date);
                 } catch (ParseException e) {
-                    System.err.println("Error parsing date: " + e.getMessage());
+                    e.printStackTrace();
                 }
 
                 activites.add(activite);
             }
 
         } catch (IOException e) {
-            System.err.println("Error reading Activities.json file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
@@ -158,7 +157,7 @@ public class DataHandler {
                 System.out.println("Trajet: " + trajet.getVilleDepart() + " -> " + trajet.getVilleArrivee() + ", Mode: " + trajet.getModeTransport() + ", Prix: " + trajet.getPrix());
             }
         } catch (IOException e) {
-            System.err.println("Error reading trajet.json file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
